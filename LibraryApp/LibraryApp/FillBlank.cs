@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace LibraryApp
 {
-    internal class FillBlank
+    public class WypelnianiePustymi : DataFill
     {
+        public WypelnianiePustymi() { }
+
+        public void Fill(DataContext context)
+        {
+        }
     }
 }

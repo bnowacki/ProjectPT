@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LibraryApp
+
 {
-    internal class DataFill
+    public interface DataFill
     {
+        void Fill(DataContext context);
     }
+
 }
