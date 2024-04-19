@@ -13,9 +13,9 @@ namespace CoffeShopTest.DataTests.CatalogTests
         {
             Catalog catalog = new Catalog();
 
-            Product product1 = new Product(1, "Apple", 1.50f, "Fruit");
-            Product product2 = new Product(2, "Banana", 0.75f, "Fruit");
-            Product product3 = new Product(3, "Tomato", 2.00f, "Vegetable");
+            Product product1 = new Product(1, "SmallCoffee", 1.50f, "Coffee");
+            Product product2 = new Product(2, "Cookie", 0.75f, "Desert");
+            Product product3 = new Product(3, "Cappucino", 2.00f, "Coffe");
 
             catalog.AddProduct(product1);
             catalog.AddProduct(product2);
@@ -33,7 +33,7 @@ namespace CoffeShopTest.DataTests.CatalogTests
         public void TestCatalogAddProduct()
         {
             Catalog catalog = new Catalog();
-            Product product1 = new Product(1, "Apple", 1.50f, "Fruit");
+            Product product1 = new Product(1, "SmallCoffee", 1.50f, "Coffee");
 
             catalog.AddProduct(product1);
             var products = catalog.GetProducts();
@@ -46,8 +46,8 @@ namespace CoffeShopTest.DataTests.CatalogTests
         public void TestCatalogRemoveProduct()
         {
             Catalog catalog = new Catalog();
-            Product product1 = new Product(1, "Apple", 1.50f, "Fruit");
-            Product product2 = new Product(2, "Banana", 0.75f, "Fruit");
+            Product product1 = new Product(1, "SmallCoffee", 1.50f, "Coffee");
+            Product product2 = new Product(2, "Cookie", 0.75f, "Desert");
             catalog.AddProduct(product1);
             catalog.AddProduct(product2);
 
