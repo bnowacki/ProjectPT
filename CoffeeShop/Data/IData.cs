@@ -1,8 +1,8 @@
-﻿using CoffeShop.Data.Catalog;
-using CoffeShop.Data.Users;
-using CoffeShop.Data.State;
+﻿using CoffeeShop.Data.Catalog;
+using CoffeeShop.Data.Users;
+using CoffeeShop.Data.State;
 
-namespace CoffeShop.Data
+namespace CoffeeShop.Data
 {
     public interface IData
     {

@@ -1,6 +1,6 @@
-﻿using CoffeShop.Data.Catalog;
+﻿using CoffeeShop.Data.Catalog;
 
-namespace CoffeShop.Data.State
+namespace CoffeeShop.Data.State
 {
     public class Order
     {

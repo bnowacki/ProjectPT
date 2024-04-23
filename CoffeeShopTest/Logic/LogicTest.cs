@@ -1,8 +1,8 @@
-﻿using CoffeShop.Data;
+﻿using CoffeeShop.Data;
 using CoffeeShopTest.TestDataGenerators;
-using CoffeShop.Data.Users;
+using CoffeeShop.Data.Users;
 
-namespace CoffeShopTest.Logic
+namespace CoffeeShopTest.Logic
 {
     [TestClass]
     public class LogicTest
@@ -12,7 +12,7 @@ namespace CoffeShopTest.Logic
         [TestInitialize]
         public void Initialize()
         {
-            _data = CoffeShop.Data.Data.New();
+            _data = CoffeeShop.Data.Data.New();
             //_data.Seed(new RandomDataGenerator());
             _data.Seed(new HardCodedDataGenerator());
         }

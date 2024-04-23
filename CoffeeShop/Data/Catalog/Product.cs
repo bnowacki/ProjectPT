@@ -1,4 +1,4 @@
-﻿namespace CoffeShop.Data.Catalog
+﻿namespace CoffeeShop.Data.Catalog
 {
     public enum ProductCategory
     {

@@ -1,6 +1,6 @@
-﻿using CoffeShop.Data;
+﻿using CoffeeShop.Data;
 
-namespace CoffeShop.Logic
+namespace CoffeeShop.Logic
 {
     public interface ILogic
     {

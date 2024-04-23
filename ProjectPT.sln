@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FibConsoleApp", "ConsoleApp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FibTest", "FibTest\FibTest.csproj", "{008C9925-F48D-4072-9092-0C78E4930730}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoffeShop", "CoffeShop\CoffeShop.csproj", "{B3DB4FF6-5C37-4773-993E-F9EB0B5ED9CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoffeeShop", "CoffeeShop\CoffeeShop.csproj", "{B3DB4FF6-5C37-4773-993E-F9EB0B5ED9CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoffeeShopTest", "CoffeeShopTest\CoffeeShopTest.csproj", "{28AFFD6A-C83B-409A-82D8-020BBBBB2B7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoffeeShopTest", "CoffeeShopTest\CoffeeShopTest.csproj", "{28AFFD6A-C83B-409A-82D8-020BBBBB2B7F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B87791ED-EC1F-48A5-915D-83609E452BA5}"
 	ProjectSection(SolutionItems) = preProject

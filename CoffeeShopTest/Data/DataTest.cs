@@ -1,10 +1,10 @@
-﻿using CoffeShop.Data;
+﻿using CoffeeShop.Data;
 using CoffeeShopTest.TestDataGenerators;
-using CoffeShop.Data.Users;
-using CoffeShop.Data.Catalog;
-using CoffeShop.Data.State;
+using CoffeeShop.Data.Users;
+using CoffeeShop.Data.Catalog;
+using CoffeeShop.Data.State;
 
-namespace CoffeShopTest.Data
+namespace CoffeeShopTest.Data
 {
     [TestClass]
     public class DataTest
@@ -14,7 +14,7 @@ namespace CoffeShopTest.Data
         [TestInitialize]
         public void Initialize()
         {
-            _data = CoffeShop.Data.Data.New();
+            _data = CoffeeShop.Data.Data.New();
             _data.Seed(new RandomDataGenerator());
             //_data.Seed(new HardCodedDataGenerator());
         }

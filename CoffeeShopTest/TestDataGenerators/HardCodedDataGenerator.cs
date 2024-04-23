@@ -1,7 +1,7 @@
-﻿using CoffeShop.Data.Catalog;
-using CoffeShop.Data.State;
-using CoffeShop.Data.Users;
-using CoffeShop.Data;
+﻿using CoffeeShop.Data.Catalog;
+using CoffeeShop.Data.State;
+using CoffeeShop.Data.Users;
+using CoffeeShop.Data;
 
 namespace CoffeeShopTest.TestDataGenerators
 {

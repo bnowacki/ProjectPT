@@ -1,4 +1,4 @@
-﻿namespace CoffeShop.Data.Users
+﻿namespace CoffeeShop.Data.Users
 {
     public class Customer : User
     {
