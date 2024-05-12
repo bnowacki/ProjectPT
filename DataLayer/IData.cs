@@ -6,9 +6,9 @@ namespace DataLayer
 {
     public interface IData
     {
-        public static IData New(IDataContext context)
+        public static IData New(IDataContext? context = default)
         {
-            return new Data(context);
+            return new Data(context ?? new InMemoryDataContext());
         }
 
         // users
