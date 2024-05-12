@@ -1,28 +1,31 @@
-﻿using CoffeeShop.Data;
-using CoffeeShop.Data.Catalog;
-using CoffeeShop.Data.State;
-using CoffeeShop.Data.Users;
+﻿using DataLayer;
+using DataLayer.Catalog;
+using DataLayer.State;
+using DataLayer.Users;
 
-namespace CoffeeShopTest.TestDataGenerators
+namespace DataLayerTest.TestDataGeneration
 {
     internal class RandomDataGenerator : IDataGenerator
     {
-        private List<Product> products;
-        private List<User> users;
         private readonly Random random = new(DateTime.Now.Millisecond);
+
+        private IDataContext _context;
 
         public RandomDataGenerator()
         {
-            products = GenerateProducts();
-            users = GenerateUsers();
-        }
+            _context = new TestDataContext();
 
-        public List<Product> GetProducts()
+            GenerateProducts();
+            GenerateInventory();
+            GenerateUsers();
+            GenerateOrders();
+        }
+        public IDataContext GetDataContext()
         {
-            return products;
+            return _context;
         }
 
-        private List<Product> GenerateProducts()
+        private void GenerateProducts()
         {
             string[] names = {
                 "Morning Brew Bliss",
@@ -68,7 +71,6 @@ namespace CoffeeShopTest.TestDataGenerators
                 ProductCategory.Accessory
             };
 
-            List<Product> products = new();
             for (int i = 0; i < 20; i++)
             {
                 Product product = new()
@@ -80,35 +82,25 @@ namespace CoffeeShopTest.TestDataGenerators
                     Category = categories[random.Next(categories.Length)],
                     Price = (float)Math.Round(random.NextDouble() * (500 - 5) + 5, 2) // Random price between 5 and 500
                 };
-                products.Add(product);
+                _context.Products.Add(product.Id, product);
             }
-
-            return products;
         }
 
-        public Inventory GetInventory()
+        public void GenerateInventory()
         {
-            Inventory inv = new();
-            foreach (Product product in products)
+            foreach (Product product in new List<Product>(_context.Products.Values))
             {
-                inv.AddProductToStock(product.Id, random.Next(10, 201));
+                _context.Inventory.AddProductToStock(product.Id, random.Next(10, 201));
             }
-            return inv;
         }
 
-        public List<User> GetUsers()
-        {
-            return users;
-        }
-
-        private List<User> GenerateUsers()
+        private void GenerateUsers()
         {
             string[] firstNames = { "John", "Emma", "Michael", "Sophia", "William", "Olivia", "James", "Ava", "Alexander", "Isabella" };
             string[] lastNames = { "Smith", "Johnson", "Williams", "Jones", "Brown", "Davis", "Miller", "Wilson", "Moore", "Taylor" };
             string[] domains = { "gmail.com", "yahoo.com", "hotmail.com", "outlook.com", "icloud.com" };
             string[] cities = { "New York", "Los Angeles", "Chicago", "Houston", "Phoenix", "Philadelphia", "San Antonio", "San Diego", "Dallas", "San Jose" };
 
-            List<User> users = new();
             for (int i = 0; i < 20; i++)
             {
                 Employee employee = new()
@@ -120,7 +112,7 @@ namespace CoffeeShopTest.TestDataGenerators
                     Phone = GenerateRandomPhoneNumber(),
                     Salary = random.Next(3000, 10000),
                 };
-                users.Add(employee);
+                _context.Users.Add(employee.Id, employee);
 
                 Customer customer = new()
                 {
@@ -131,10 +123,8 @@ namespace CoffeeShopTest.TestDataGenerators
                     Phone = GenerateRandomPhoneNumber(),
                     ShippingAddress = cities[random.Next(cities.Length)],
                 };
-                users.Add(customer);
+                _context.Users.Add(customer.Id, customer);
             }
-
-            return users;
         }
 
         private static string GenerateRandomEmail(string firstName, string lastName, string domain)
@@ -153,9 +143,11 @@ namespace CoffeeShopTest.TestDataGenerators
             return phoneNumber;
         }
 
-        public List<Order> GetOrders()
+        public void GenerateOrders()
         {
-            List<Order> orders = new List<Order>();
+            List<Product> products = new(_context.Products.Values);
+            List<User> users = new(_context.Users.Values);
+
             for (int i = 0; i < 50; i++)
             {
                 Dictionary<Guid, int> orderProducts = new();
@@ -188,9 +180,8 @@ namespace CoffeeShopTest.TestDataGenerators
                     ShippingAddress = ((Customer)user).ShippingAddress,
                     Total = total
                 };
-                orders.Add(order);
+                _context.Orders.Add(order.Id, order);
             }
-            return orders;
         }
     }
 }
