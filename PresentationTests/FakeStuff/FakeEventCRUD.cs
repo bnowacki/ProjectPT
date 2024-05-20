@@ -13,7 +13,7 @@ internal class FakeEventCRUD : IEventCRUD
     
     public async Task AddEventAsync(int id, int stateId, int userId, string type, int quantity = 0)
     {
-        await this._fakeRepository.AddEventAsync(id, stateId, userId, type, quantity);
+        await this._fakeRepository.AddEventAsync(id, stateId, userId, type, quantity); //await
     }
 
     public async Task<IEventDTO> GetEventAsync(int id)
