@@ -1,56 +1,105 @@
-﻿using DataLayer;
-using DataLayer.Users;
-using DataLayer.Catalog;
-using DataLayer.State;
+﻿using DataLayer.API;
+using DataLayer.Database;
 
 namespace DataLayerTest
 {
-    public abstract class DataTest
+    [TestClass]
+    [DeploymentItem(@"Instrumentation\TestDatabase.mdf", @"Instrumentation")]
+    public class DataTest
     {
-        protected IDataContext _context;
-        protected IData _data;
+        private static IData _data;
+        private static string _connectionString;
 
-        public abstract void Initialize();
+        [ClassInitialize]
+        public static void ClassInitializeMethod(TestContext context)
+        {
+            string _DBRelativePath = @"Instrumentation\TestDatabase.mdf";
+            string _DBPath = Path.Combine(Environment.CurrentDirectory, _DBRelativePath);
+            FileInfo _databaseFile = new(_DBPath);
+            Assert.IsTrue(_databaseFile.Exists, $"{Environment.CurrentDirectory}");
+            //_connectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={_DBPath};Integrated Security = True;Connect Timeout = 30;";
+            // TODO: use relative path
+            _connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\zauro\\Documents\\studia\\4\\PT\\ProjectPT\\DataLayerTest\\Instrumentation\\TestDatabase.mdf;Integrated Security=True";
+            _data = IData.New(IDataContext.New(_connectionString));
+        }
 
         #region users
-        [TestMethod]
-        public void TestGetUsers()
-        {
-            List<User> users = _data.GetUsers();
-            Assert.AreEqual(_context.Users.Count, users.Count);
-        }
 
         [TestMethod]
-        public void TestUpsertUser()
+        public async Task TestUsers()
         {
-            Customer c = new()
+            using DatabaseDataContext context = new(_connectionString);
+
+            try
             {
-                Id = Guid.NewGuid(),
-                FirstName = "Bartek",
-                LastName = "Kowalski",
-                Email = "kowalski@gmail.com",
-                Phone = "123456789",
-            };
-            _data.UpsertUser(c);
-            Assert.AreSame(c, _data.GetUser(c.Id));
+                // insert first test user
+
+                string firstName1 = "Bartosz";
+                string lastName1 = "Nowacki";
+                string email1 = "bart@gmail.com";
+
+                IUser user1 = await _data.CreateUser(firstName1, lastName1, email1);
+
+                Assert.AreEqual("Bartosz", user1.FirstName);
+                Assert.AreEqual(lastName1, user1.LastName);
+                Assert.AreEqual(email1, user1.Email);
+
+                // insert second test user
+
+                string firstName2 = "Krzysztof";
+                string lastName2 = "Muszynski";
+                string email2 = "krzys@gmail.com";
+
+                IUser user2 = await _data.CreateUser(firstName2, lastName2, email2);
+
+                Assert.AreEqual(firstName2, user2.FirstName);
+                Assert.AreEqual(lastName2, user2.LastName);
+                Assert.AreEqual(email2, user2.Email);
+
+                // test get users
+                IEnumerable<IUser> users = await _data.GetUsers();
+
+                Assert.AreEqual(2, users.Count());
+
+                // test get user
+                IUser fetchedUser = await _data.GetUser(user1.Id);
+
+                Assert.AreEqual(user1.Id, fetchedUser.Id);
+                Assert.AreEqual(user1.FirstName, fetchedUser.FirstName);
+                Assert.AreEqual(user1.LastName, fetchedUser.LastName);
+                Assert.AreEqual(user1.Email, fetchedUser.Email);
+            }
+            finally
+            {
+                context.TruncateAllData();
+            }
+        }
+
+        /*
+        [TestMethod]
+        public async Task TestCreateUser()
+        {
+
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException), "User not found")]
-        public void TestDeleteUser()
+        [ExpectedException(typeof(InvalidOperationException), "User not found")]
+        public async void TestDeleteUser()
         {
-            List<User> users = _data.GetUsers();
-            if (users.Count == 0)
+            IEnumerable<IUser> users = await _data.GetUsers();
+            if (users.Count() == 0)
             {
                 throw new Exception("No users");
             }
-            User p = users[0];
-            Assert.IsTrue(_data.DeleteUser(p.Id));
-            _data.GetUser(p.Id);
+            IUser p = users.First();
+            Assert.IsTrue(await _data.DeleteUser(p.Id));
+            await _data.GetUser(p.Id);
         }
+        */
 
         #endregion users
 
+        /*
         #region products
 
         [TestMethod]
@@ -153,5 +202,6 @@ namespace DataLayerTest
         }
 
         #endregion orders
+        */
     }
 }

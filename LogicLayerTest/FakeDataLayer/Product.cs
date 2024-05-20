@@ -1,21 +1,12 @@
-﻿namespace DataLayer.Catalog
-{
-    public enum ProductCategory
-    {
-        Coffee,
-        Tea,
-        Express,
-        Grinder,
-        Accessory
-    }
+﻿using DataLayer.API;
 
-    public class Product
+namespace LogicLayerTest.FakeDataLayer
+{
+    internal class Product : IProduct
     {
         public Guid Id { get; init; }
         public string Name { get; set; } = "";
-        public string Description { get; set; } = "";
-        public string Brand { get; set; } = "";
-        public ProductCategory Category { get; set; }
+        public int Stock { get; set; } = 0;
 
         private float price;
         public float Price

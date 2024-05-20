@@ -1,12 +1,13 @@
-﻿namespace DataLayer.Users
+﻿using DataLayer.API;
+
+namespace DataLayer.Implementation
 {
-    public abstract class User
+    internal class User : IUser
     {
         public Guid Id { get; init; }
         public string FirstName { get; set; } = "";
         public string LastName { get; set; } = "";
         public string Email { get; set; } = "";
-        public string? Phone { get; set; }
 
         public string GetFullName()
         {
