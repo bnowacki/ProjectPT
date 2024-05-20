@@ -57,8 +57,8 @@ public class PresentationTests
 
         IProductMasterViewModel master = IProductMasterViewModel.CreateViewModel(operation, _informer);
 
-        master.Name = "Game";
-        master.Price = 123;
+        master.Name = "Chocolate";
+        master.Price = 13;
 
         Assert.IsNotNull(master.CreateProduct);
         Assert.IsNotNull(master.RemoveProduct);
@@ -79,11 +79,11 @@ public class PresentationTests
 
         IProductModelOperation operation = IProductModelOperation.CreateModelOperation(fakeProductCrud);
 
-        IProductDetailViewModel detail = IProductDetailViewModel.CreateViewModel(1, "kanapa", 200, 
+        IProductDetailViewModel detail = IProductDetailViewModel.CreateViewModel(1, "Banana", 200, 
             operation, _informer);
 
         Assert.AreEqual(1, detail.Id);
-        Assert.AreEqual("kanapa", detail.Name);
+        Assert.AreEqual("Banana", detail.Name);
         Assert.AreEqual(200, detail.Price);
 
         Assert.IsTrue(detail.UpdateProduct.CanExecute(null));
