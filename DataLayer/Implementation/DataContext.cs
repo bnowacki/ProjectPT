@@ -1,4 +1,5 @@
-﻿using DataLayer.API;
+﻿using System;
+using DataLayer.API;
 using DataLayer.Database;
 
 namespace DataLayer.Implementation
@@ -11,10 +12,8 @@ namespace DataLayer.Implementation
         {
             if (connectionString is null)
             {
-                string _projectRootDir = Environment.CurrentDirectory;
-                string _DBRelativePath = @"..\Database\Database.mdf";
-                string _DBPath = Path.Combine(_projectRootDir, _DBRelativePath);
-                _connectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={_DBPath};Integrated Security = True; Connect Timeout = 30;";
+                //_connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DatabaseConnectionString"].ConnectionString;
+                _connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\Database\\Database.mdf;Integrated Security=True";
             }
             else
             {

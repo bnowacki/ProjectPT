@@ -7,10 +7,24 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Mindbox.Data.Linq" Version="10.7.2" />
+    <None Remove="Database\Database.mdf" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Database\Database.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Mindbox.Data.Linq" Version="10.7.2" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="App.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Database\Database.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>Database.designer.cs</LastGenOutput>

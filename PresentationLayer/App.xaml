@@ -1,0 +1,16 @@
+﻿<Application x:Class="PresentationLayer.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:PresentationLayer;assembly=PresentationLayer"
+             xmlns:viewmodels="clr-namespace:PresentationLayer.ViewModel"
+             xmlns:views="clr-namespace:PresentationLayer.View"
+             StartupUri="View/MainWindow.xaml">
+    <Application.Resources>
+        <DataTemplate DataType="{x:Type viewmodels:HomeViewModel}">
+            <views:HomeView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:UserMasterViewModel}">
+            <views:UserMasterView/>
+        </DataTemplate>
+    </Application.Resources>
+</Application>

@@ -8,13 +8,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "DataLayer\DataLayer.csproj", "{0987DE88-7041-4DAB-895E-86ADA9BFCFE9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataLayer", "DataLayer\DataLayer.csproj", "{0987DE88-7041-4DAB-895E-86ADA9BFCFE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayerTest", "DataLayerTest\DataLayerTest.csproj", "{B897560B-E27F-48D8-8232-C10E8F9D45DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataLayerTest", "DataLayerTest\DataLayerTest.csproj", "{B897560B-E27F-48D8-8232-C10E8F9D45DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicLayer", "LogicLayer\LogicLayer.csproj", "{EA7D52A6-2293-4A3F-9DB6-6A4FD7A94C49}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicLayer", "LogicLayer\LogicLayer.csproj", "{EA7D52A6-2293-4A3F-9DB6-6A4FD7A94C49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicLayerTest", "LogicLayerTest\LogicLayerTest.csproj", "{071FA380-F383-4F9C-B256-28EF617C392A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicLayerTest", "LogicLayerTest\LogicLayerTest.csproj", "{071FA380-F383-4F9C-B256-28EF617C392A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresentationLayer", "PresentationLayer\PresentationLayer.csproj", "{217D4FBF-43C3-4D22-99C8-1EBCD56B492D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +40,10 @@ Global
 		{071FA380-F383-4F9C-B256-28EF617C392A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{071FA380-F383-4F9C-B256-28EF617C392A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{071FA380-F383-4F9C-B256-28EF617C392A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{217D4FBF-43C3-4D22-99C8-1EBCD56B492D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{217D4FBF-43C3-4D22-99C8-1EBCD56B492D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{217D4FBF-43C3-4D22-99C8-1EBCD56B492D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{217D4FBF-43C3-4D22-99C8-1EBCD56B492D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
