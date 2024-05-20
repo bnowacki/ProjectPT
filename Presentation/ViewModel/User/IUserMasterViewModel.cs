@@ -19,13 +19,9 @@ public interface IUserMasterViewModel
 
     ObservableCollection<IUserDetailViewModel> Users { get; set; }
 
-    string Nickname { get; set; }
+    string Name { get; set; }
 
     string Email { get; set; }
-
-    double Balance { get; set; }
-
-    DateTime DateOfBirth { get; set; }
 
     bool IsUserSelected { get; set; }
 

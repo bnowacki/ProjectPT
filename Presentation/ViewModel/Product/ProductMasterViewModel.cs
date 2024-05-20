@@ -60,18 +60,6 @@ internal class ProductMasterViewModel : IViewModel, IProductMasterViewModel
         }
     }
 
-    private int _pegi;
-
-    public int Pegi
-    {
-        get => _pegi;
-        set
-        {
-            _pegi = value;
-            OnPropertyChanged(nameof(Pegi));
-        }
-    }
-
     private bool _isProductSelected;
 
     public bool IsProductSelected
@@ -79,7 +67,7 @@ internal class ProductMasterViewModel : IViewModel, IProductMasterViewModel
         get => _isProductSelected;
         set
         {
-            this.IsProductDetailVisible = value ? Visibility.Visible : Visibility.Hidden;
+            IsProductDetailVisible = value ? Visibility.Visible : Visibility.Hidden;
 
             _isProductSelected = value;
             OnPropertyChanged(nameof(IsProductSelected));
@@ -106,7 +94,7 @@ internal class ProductMasterViewModel : IViewModel, IProductMasterViewModel
         set
         {
             _selectedDetailViewModel = value;
-            this.IsProductSelected = true;
+            IsProductSelected = true;
 
             OnPropertyChanged(nameof(SelectedDetailViewModel));
         }
@@ -114,19 +102,19 @@ internal class ProductMasterViewModel : IViewModel, IProductMasterViewModel
 
     public ProductMasterViewModel(IProductModelOperation? model = null, IErrorInformer? informer = null)
     {
-        this.SwitchToUserMasterPage = new SwitchViewCommand("UserMasterView");
-        this.SwitchToStateMasterPage = new SwitchViewCommand("StateMasterView");
-        this.SwitchToEventMasterPage = new SwitchViewCommand("EventMasterView");
+        SwitchToUserMasterPage = new SwitchViewCommand("UserMasterView");
+        SwitchToStateMasterPage = new SwitchViewCommand("StateMasterView");
+        SwitchToEventMasterPage = new SwitchViewCommand("EventMasterView");
 
-        this.CreateProduct = new OnClickCommand(e => this.StoreProduct(), c => this.CanStoreProduct());
-        this.RemoveProduct = new OnClickCommand(e => this.DeleteProduct());
+        CreateProduct = new OnClickCommand(e => StoreProduct(), c => CanStoreProduct());
+        RemoveProduct = new OnClickCommand(e => DeleteProduct());
 
-        this.Products = new ObservableCollection<IProductDetailViewModel>();
+        Products = new ObservableCollection<IProductDetailViewModel>();
 
-        this._modelOperation = model ?? IProductModelOperation.CreateModelOperation();
-        this._informer = informer ?? new PopupErrorInformer();
+        _modelOperation = model ?? IProductModelOperation.CreateModelOperation();
+        _informer = informer ?? new PopupErrorInformer();
 
-        this.IsProductSelected = false;
+        IsProductSelected = false;
 
         Task.Run(this.LoadProducts);
     }
@@ -136,9 +124,7 @@ internal class ProductMasterViewModel : IViewModel, IProductMasterViewModel
         return !(
             string.IsNullOrWhiteSpace(this.Name) ||
             string.IsNullOrWhiteSpace(this.Price.ToString()) ||
-            string.IsNullOrEmpty(this.Pegi.ToString()) ||
-            this.Price <= 0 ||
-            this.Pegi <= 0
+            this.Price <= 0 
         );
     }
 
@@ -148,11 +134,11 @@ internal class ProductMasterViewModel : IViewModel, IProductMasterViewModel
         {
             int lastId = await this._modelOperation.GetCountAsync() + 1;
 
-            await this._modelOperation.AddAsync(lastId, this.Name, this.Price, this.Pegi);
+            await this._modelOperation.AddAsync(lastId, Name, Price);
 
-            this.LoadProducts();
+            LoadProducts();
 
-            this._informer.InformSuccess("Product added successfully!");
+            _informer.InformSuccess("Product added successfully!");
 
         });
     }
@@ -163,30 +149,30 @@ internal class ProductMasterViewModel : IViewModel, IProductMasterViewModel
         {
             try
             {
-                await this._modelOperation.DeleteAsync(this.SelectedDetailViewModel.Id);
+                await _modelOperation.DeleteAsync(SelectedDetailViewModel.Id);
 
-                this.LoadProducts();
+                LoadProducts();
 
-                this._informer.InformSuccess("Product deleted successfully!");
+                _informer.InformSuccess("Product deleted successfully!");
             }
             catch (Exception e)
             {
-                this._informer.InformError("Error while deleting product! Remember to remove all associated states!");
+                _informer.InformError("Error while deleting product! Remember to remove all associated states!");
             }
         });
     }
 
     private async void LoadProducts()
     {
-        Dictionary<int, IProductModel> Products = await this._modelOperation.GetAllAsync();
+        Dictionary<int, IProductModel> Products = await _modelOperation.GetAllAsync();
 
         Application.Current.Dispatcher.Invoke(() =>
         {
-            this._products.Clear();
+            _products.Clear();
             
             foreach (IProductModel p in Products.Values)
             {
-                this._products.Add(new ProductDetailViewModel(p.Id, p.Name, p.Price, p.Pegi));
+                _products.Add(new ProductDetailViewModel(p.Id, p.Name, p.Price));
             }
         });
 

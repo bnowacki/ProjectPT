@@ -25,15 +25,15 @@ internal class UserDetailViewModel : IViewModel, IUserDetailViewModel
         }
     }
 
-    private string _nickname;
+    private string _name;
 
-    public string Nickname
+    public string Name
     {
-        get => _nickname;
+        get => _name;
         set
         {
-            _nickname = value;
-            OnPropertyChanged(nameof(Nickname));
+            _name = value;
+            OnPropertyChanged(nameof(Name));
         }
     }
 
@@ -49,30 +49,6 @@ internal class UserDetailViewModel : IViewModel, IUserDetailViewModel
         }
     }
 
-    private double _balance;
-
-    public double Balance
-    {
-        get => _balance;
-        set
-        {
-            _balance = value;
-            OnPropertyChanged(nameof(Balance));
-        }
-    }
-
-    private DateTime _dateOfBirth;
-
-    public DateTime DateOfBirth
-    {
-        get => _dateOfBirth;
-        set
-        {
-            _dateOfBirth = value;
-            OnPropertyChanged(nameof(DateOfBirth));
-        }
-    }
-
     public UserDetailViewModel(IUserModelOperation? model = null, IErrorInformer? informer = null)
     {
         this.UpdateUser = new OnClickCommand(e => this.Update(), c => this.CanUpdate());
@@ -81,13 +57,11 @@ internal class UserDetailViewModel : IViewModel, IUserDetailViewModel
         this._informer = informer ?? new PopupErrorInformer();
     }
 
-    public UserDetailViewModel(int id, string nickname, string email, double balance, DateTime dateOfBirth, IUserModelOperation? model = null, IErrorInformer? informer = null)
+    public UserDetailViewModel(int id, string name, string email, IUserModelOperation? model = null, IErrorInformer? informer = null)
     {
         this.Id = id;
-        this.Nickname = nickname;
+        this.Name = name;
         this.Email = email;
-        this.Balance = balance;
-        this.DateOfBirth = dateOfBirth;
 
         this.UpdateUser = new OnClickCommand(e => this.Update(), c => this.CanUpdate());
 
@@ -99,7 +73,7 @@ internal class UserDetailViewModel : IViewModel, IUserDetailViewModel
     {
         Task.Run(() =>
         {
-            this._modelOperation.UpdateAsync(this.Id, this.Nickname, this.Email, this.Balance, this.DateOfBirth);
+            this._modelOperation.UpdateAsync(this.Id, this.Name, this.Email);
 
             this._informer.InformSuccess("User successfully updated!");
         });
@@ -108,11 +82,8 @@ internal class UserDetailViewModel : IViewModel, IUserDetailViewModel
     private bool CanUpdate()
     {
         return !(
-            string.IsNullOrWhiteSpace(this.Nickname) ||
-            string.IsNullOrWhiteSpace(this.Email) ||
-            string.IsNullOrWhiteSpace(this.Balance.ToString()) ||
-            string.IsNullOrWhiteSpace(this.DateOfBirth.ToString()) ||
-            this.Balance == 0
+            string.IsNullOrWhiteSpace(this.Name) ||
+            string.IsNullOrWhiteSpace(this.Email)
         );
     }
 }

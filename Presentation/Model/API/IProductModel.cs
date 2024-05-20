@@ -7,6 +7,4 @@ public interface IProductModel
     string Name { get; set; }
 
     double Price { get; set; }
-
-    int Pegi { get; set; }
 }

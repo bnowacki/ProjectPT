@@ -8,5 +8,4 @@ public interface IProductDTO
 
     double Price { get; set; }
 
-    int Pegi { get; set; }
 }

@@ -12,9 +12,9 @@ internal class FakeUserCRUD : IUserCRUD
 
     }
 
-    public async Task AddUserAsync(int id, string nickname, string email, double balance, DateTime dateOfBirth)
+    public async Task AddUserAsync(int id, string name, string email)
     {
-        await this._fakeRepository.AddUserAsync(id, nickname, email, balance, dateOfBirth);
+        await this._fakeRepository.AddUserAsync(id, name, email);
     }
 
     public async Task<IUserDTO> GetUserAsync(int id)
@@ -22,9 +22,9 @@ internal class FakeUserCRUD : IUserCRUD
         return await this._fakeRepository.GetUserAsync(id);
     }
 
-    public async Task UpdateUserAsync(int id, string nickname, string email, double balance, DateTime dateOfBirth)
+    public async Task UpdateUserAsync(int id, string name, string email)
     {
-        await this._fakeRepository.UpdateUserAsync(id, nickname, email, balance, dateOfBirth);
+        await this._fakeRepository.UpdateUserAsync(id, name, email);
     }
 
     public async Task DeleteUserAsync(int id)

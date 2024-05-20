@@ -14,30 +14,26 @@ public class ServiceTests
     {
         IUserCRUD userCrud = IUserCRUD.CreateUserCRUD(this._repository);
 
-        await userCrud.AddUserAsync(1, "Maciek", "maciek.kowalski@gmail.pl", 1200, new DateTime(2001, 10, 10));
+        await userCrud.AddUserAsync(1, "Maciek", "maciek.kowalski@gmail.pl");
 
         IUserDTO user = await userCrud.GetUserAsync(1);
 
         Assert.IsNotNull(user);
         Assert.AreEqual(1, user.Id);
-        Assert.AreEqual("Maciek", user.Nickname);
+        Assert.AreEqual("Maciek", user.Name);
         Assert.AreEqual("maciek.kowalski@gmail.pl", user.Email);
-        Assert.AreEqual(1200, user.Balance);
-        Assert.AreEqual(new DateTime(2001, 10, 10), user.DateOfBirth);
 
         Assert.IsNotNull(await userCrud.GetAllUsersAsync());
         Assert.IsTrue(await userCrud.GetUsersCountAsync() > 0);
 
-        await userCrud.UpdateUserAsync(1, "Patrycja", "patrycja.palanowska@gmail.com", 300, new DateTime(2001, 1, 1));
+        await userCrud.UpdateUserAsync(1, "Patrycja", "patrycja.palanowska@gmail.com");
 
         IUserDTO updatedUser = await userCrud.GetUserAsync(1);
 
         Assert.IsNotNull(updatedUser);
         Assert.AreEqual(1, updatedUser.Id);
-        Assert.AreEqual("Patrycja", updatedUser.Nickname);
+        Assert.AreEqual("Patrycja", updatedUser.Name);
         Assert.AreEqual("patrycja.palanowska@gmail.com", updatedUser.Email);
-        Assert.AreEqual(300, updatedUser.Balance);
-        Assert.AreEqual(new DateTime(2001, 1, 1), updatedUser.DateOfBirth);
 
         await userCrud.DeleteUserAsync(1);
     }
@@ -47,7 +43,7 @@ public class ServiceTests
     {
         IProductCRUD productCrud = IProductCRUD.CreateProductCRUD(this._repository);
 
-        await productCrud.AddProductAsync(1, "Kanapa", 200, 18);
+        await productCrud.AddProductAsync(1, "Kanapa", 200);
 
         IProductDTO product = await productCrud.GetProductAsync(1);
 
@@ -55,12 +51,11 @@ public class ServiceTests
         Assert.AreEqual(1, product.Id);
         Assert.AreEqual("Kanapa", product.Name);
         Assert.AreEqual(200, product.Price);
-        Assert.AreEqual(18, product.Pegi);
 
         Assert.IsNotNull(await productCrud.GetAllProductsAsync());
         Assert.IsTrue(await productCrud.GetProductsCountAsync() > 0);
 
-        await productCrud.UpdateProductAsync(1, "Pralka", 300, 12);
+        await productCrud.UpdateProductAsync(1, "Pralka", 300);
 
         IProductDTO updatedProduct = await productCrud.GetProductAsync(1);
 
@@ -68,7 +63,6 @@ public class ServiceTests
         Assert.AreEqual(1, updatedProduct.Id);
         Assert.AreEqual("Pralka", updatedProduct.Name);
         Assert.AreEqual(300, updatedProduct.Price);
-        Assert.AreEqual(12, updatedProduct.Pegi);
 
         await productCrud.DeleteProductAsync(1);
     }
@@ -78,7 +72,7 @@ public class ServiceTests
     {
         IProductCRUD productCrud = IProductCRUD.CreateProductCRUD(this._repository);
 
-        await productCrud.AddProductAsync(1, "Kanapa", 200, 18);
+        await productCrud.AddProductAsync(1, "Kanapa", 200);
 
         IProductDTO product = await productCrud.GetProductAsync(1);
 
@@ -111,7 +105,7 @@ public class ServiceTests
     {
         IProductCRUD productCrud = IProductCRUD.CreateProductCRUD(this._repository);
 
-        await productCrud.AddProductAsync(1, "Kanapa", 200, 18);
+        await productCrud.AddProductAsync(1, "Kanapa", 200);
 
         IProductDTO product = await productCrud.GetProductAsync(1);
 
@@ -123,7 +117,7 @@ public class ServiceTests
 
         IUserCRUD userCrud = IUserCRUD.CreateUserCRUD(this._repository);
 
-        await userCrud.AddUserAsync(1, "Maciek", "maciek.kowalski@gmail.pl", 1200, new DateTime(1990, 10, 10));
+        await userCrud.AddUserAsync(1, "Maciek", "maciek.kowalski@gmail.pl");
 
         IUserDTO user = await userCrud.GetUserAsync(1);
 
@@ -134,7 +128,6 @@ public class ServiceTests
         user = await userCrud.GetUserAsync(1);
         state = await stateCrud.GetStateAsync(1);
 
-        Assert.AreEqual(1000, user.Balance);
         Assert.AreEqual(9, state.productQuantity);
 
         await eventCrud.DeleteEventAsync(1);
@@ -148,7 +141,7 @@ public class ServiceTests
     {
         IProductCRUD productCrud = IProductCRUD.CreateProductCRUD(this._repository);
 
-        await productCrud.AddProductAsync(2, "Kanapa", 200, 18);
+        await productCrud.AddProductAsync(2, "Kanapa", 200);
 
         IProductDTO product = await productCrud.GetProductAsync(2);
 
@@ -160,7 +153,7 @@ public class ServiceTests
 
         IUserCRUD userCrud = IUserCRUD.CreateUserCRUD(this._repository);
 
-        await userCrud.AddUserAsync(2, "Maciek", "maciek.kowalski@gmail.pl", 1200, new DateTime(1990, 10, 10));
+        await userCrud.AddUserAsync(2, "Maciek", "maciek.kowalski@gmail.pl");
 
         IUserDTO user = await userCrud.GetUserAsync(2);
 
@@ -173,7 +166,6 @@ public class ServiceTests
         user = await userCrud.GetUserAsync(2);
         state = await stateCrud.GetStateAsync(2);
 
-        Assert.AreEqual(1200, user.Balance);
         Assert.AreEqual(10, state.productQuantity);
 
         await eventCrud.DeleteEventAsync(2);
@@ -188,7 +180,7 @@ public class ServiceTests
     {
         IProductCRUD productCrud = IProductCRUD.CreateProductCRUD(this._repository);
 
-        await productCrud.AddProductAsync(4, "Kanapa", 200, 18);
+        await productCrud.AddProductAsync(4, "Kanapa", 200);
 
         IProductDTO product = await productCrud.GetProductAsync(4);
 
@@ -200,7 +192,7 @@ public class ServiceTests
 
         IUserCRUD userCrud = IUserCRUD.CreateUserCRUD(this._repository);
 
-        await userCrud.AddUserAsync(4, "Maciek", "maciek.kowalski@gmail.pl", 1200, new DateTime(1990, 10, 10));
+        await userCrud.AddUserAsync(4, "Maciek", "maciek.kowalski@gmail.pl");
 
         IUserDTO user = await userCrud.GetUserAsync(4);
 

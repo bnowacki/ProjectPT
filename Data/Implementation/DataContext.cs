@@ -31,10 +31,8 @@ internal class DataContext : IDataContext
             Database.User entity = new Database.User()
             {
                 id = user.Id,
-                nickname = user.Nickname,
+                name = user.Name,
                 email = user.Email,
-                balance = (decimal)user.Balance,
-                dateOfBirth = user.DateOfBirth,
             };
 
             context.Users.InsertOnSubmit(entity);
@@ -57,7 +55,7 @@ internal class DataContext : IDataContext
                 return query.FirstOrDefault();
             });
         
-            return user is not null ? new User(user.id, user.nickname, user.email, (double)user.balance, user.dateOfBirth) : null;
+            return user is not null ? new User(user.id, user.name, user.email) : null;
         }
     }
 
@@ -67,10 +65,8 @@ internal class DataContext : IDataContext
         {
             Database.User toUpdate = (from u in context.Users where u.id == user.Id select u).FirstOrDefault()!;
 
-            toUpdate.nickname = user.Nickname;
+            toUpdate.name = user.Name;
             toUpdate.email = user.Email;
-            toUpdate.balance = (decimal)user.Balance;
-            toUpdate.dateOfBirth = user.DateOfBirth;
 
             await Task.Run(() => context.SubmitChanges());
         }
@@ -94,7 +90,7 @@ internal class DataContext : IDataContext
         {
             IQueryable<IUser> usersQuery = from u in context.Users
                 select
-                    new User(u.id, u.nickname, u.email, (double)u.balance, u.dateOfBirth) as IUser;
+                    new User(u.id, u.name, u.email) as IUser;
 
             return await Task.Run(() => usersQuery.ToDictionary(k => k.Id));
         }
@@ -122,7 +118,6 @@ internal class DataContext : IDataContext
                 id = product.Id,
                 name = product.Name,
                 price = product.Price,
-                pegi = product.Pegi,
             };
 
             context.Products.InsertOnSubmit(entity);
@@ -145,7 +140,7 @@ internal class DataContext : IDataContext
                 return query.FirstOrDefault();
             });
 
-            return product is not null ? new Game(product.id, product.name, (double)product.price, product.pegi) : null;
+            return product is not null ? new Game(product.id, product.name, (double)product.price) : null;
         }
     }
 
@@ -157,7 +152,6 @@ internal class DataContext : IDataContext
 
             toUpdate.name = product.Name;
             toUpdate.price = product.Price;
-            toUpdate.pegi = product.Pegi;
 
             await Task.Run(() => context.SubmitChanges());
         }
@@ -181,7 +175,7 @@ internal class DataContext : IDataContext
         {
             IQueryable<IProduct> productQuery = from p in context.Products
                 select
-                    new Game(p.id, p.name, (double)p.price, p.pegi) as IProduct;
+                    new Game(p.id, p.name, (double)p.price) as IProduct;
 
             return await Task.Run(() => productQuery.ToDictionary(k => k.Id));
         }

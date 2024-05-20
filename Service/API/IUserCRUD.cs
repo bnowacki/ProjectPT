@@ -10,11 +10,11 @@ public interface IUserCRUD
         return new UserCRUD(dataRepository ?? IDataRepository.CreateDatabase());
     }
 
-    Task AddUserAsync(int id, string nickname, string email, double balance, DateTime dateOfBirth);
+    Task AddUserAsync(int id, string name, string email);
 
     Task<IUserDTO> GetUserAsync(int id);
 
-    Task UpdateUserAsync(int id, string nickname, string email, double balance, DateTime dateOfBirth);
+    Task UpdateUserAsync(int id, string name, string email);
 
     Task DeleteUserAsync(int id);
 

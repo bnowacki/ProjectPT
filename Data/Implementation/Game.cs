@@ -4,12 +4,11 @@ namespace Data.Implementation;
 
 internal class Game : IProduct
 {
-    public Game(int id, string name, double price, int pegi)
+    public Game(int id, string name, double price)
     {
-        this.Id = id;
-        this.Name = name;
-        this.Price = price;
-        this.Pegi = pegi;
+        Id = id;
+        Name = name;
+        Price = price;
     }
 
     public int Id { get; set; }
@@ -18,5 +17,4 @@ internal class Game : IProduct
 
     public double Price { get; set; }
 
-    public int Pegi { get; set; }
 }

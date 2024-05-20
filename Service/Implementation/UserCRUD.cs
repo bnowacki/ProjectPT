@@ -14,12 +14,12 @@ internal class UserCRUD : IUserCRUD
 
     private IUserDTO Map(IUser user)
     {
-        return new UserDTO(user.Id, user.Nickname, user.Email, user.Balance, user.DateOfBirth);
+        return new UserDTO(user.Id, user.Name, user.Email);
     }
 
-    public async Task AddUserAsync(int id, string nickname, string email, double balance, DateTime dateOfBirth)
+    public async Task AddUserAsync(int id, string name, string email)
     {
-        await this._repository.AddUserAsync(id, nickname, email, balance, dateOfBirth);
+        await this._repository.AddUserAsync(id, name, email);
     }
 
     public async Task<IUserDTO> GetUserAsync(int id)
@@ -27,9 +27,9 @@ internal class UserCRUD : IUserCRUD
         return this.Map(await this._repository.GetUserAsync(id));
     }
 
-    public async Task UpdateUserAsync(int id, string nickname, string email, double balance, DateTime dateOfBirth)
+    public async Task UpdateUserAsync(int id, string name, string email)
     {
-        await this._repository.UpdateUserAsync(id, nickname, email, balance, dateOfBirth);
+        await this._repository.UpdateUserAsync(id, name, email);
     }
 
     public async Task DeleteUserAsync(int id)

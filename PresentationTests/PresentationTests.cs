@@ -21,19 +21,13 @@ public class PresentationTests
 
         IUserMasterViewModel viewModel = IUserMasterViewModel.CreateViewModel(operation, _informer);
 
-        viewModel.Nickname = "Test";
+        viewModel.Name = "Test";
         viewModel.Email = "Test.test@gmai.com";
-        viewModel.Balance = 124;
-        viewModel.DateOfBirth = DateTime.Now;
 
         Assert.IsNotNull(viewModel.CreateUser);
         Assert.IsNotNull(viewModel.RemoveUser);
 
         Assert.IsTrue(viewModel.CreateUser.CanExecute(null));
-
-        viewModel.Balance = -1;
-
-        Assert.IsFalse(viewModel.CreateUser.CanExecute(null));
 
         Assert.IsTrue(viewModel.RemoveUser.CanExecute(null));
     }
@@ -45,14 +39,11 @@ public class PresentationTests
 
         IUserModelOperation operation = IUserModelOperation.CreateModelOperation(fakeUserCrud);
 
-        IUserDetailViewModel detail = IUserDetailViewModel.CreateViewModel(1, "Test", "test.email", 
-            123, new DateTime(2001, 1, 1), operation, _informer);
+        IUserDetailViewModel detail = IUserDetailViewModel.CreateViewModel(1, "Test", "test.email", operation, _informer);
 
         Assert.AreEqual(1, detail.Id);
-        Assert.AreEqual("Test", detail.Nickname);
+        Assert.AreEqual("Test", detail.Name);
         Assert.AreEqual("test.email", detail.Email);
-        Assert.AreEqual(123, detail.Balance);
-        Assert.AreEqual(new DateTime(2001, 1, 1), detail.DateOfBirth);
 
         Assert.IsTrue(detail.UpdateUser.CanExecute(null));
     }
@@ -68,7 +59,6 @@ public class PresentationTests
 
         master.Name = "Game";
         master.Price = 123;
-        master.Pegi = 18;
 
         Assert.IsNotNull(master.CreateProduct);
         Assert.IsNotNull(master.RemoveProduct);
@@ -89,13 +79,12 @@ public class PresentationTests
 
         IProductModelOperation operation = IProductModelOperation.CreateModelOperation(fakeProductCrud);
 
-        IProductDetailViewModel detail = IProductDetailViewModel.CreateViewModel(1, "kanapa", 200, 12, 
+        IProductDetailViewModel detail = IProductDetailViewModel.CreateViewModel(1, "kanapa", 200, 
             operation, _informer);
 
         Assert.AreEqual(1, detail.Id);
         Assert.AreEqual("kanapa", detail.Name);
         Assert.AreEqual(200, detail.Price);
-        Assert.AreEqual(12, detail.Pegi);
 
         Assert.IsTrue(detail.UpdateProduct.CanExecute(null));
     }

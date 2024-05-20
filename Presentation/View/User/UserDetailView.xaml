@@ -47,9 +47,9 @@ Background="White">
             VerticalAlignment="Top"
             Background="White" Orientation="Horizontal">
 
-                    <Label Content="Nickname:" Width="85"/>
+                    <Label Content="Name:" Width="85"/>
                     <TextBox Height="20" Width="120"
-                         Text="{Binding Nickname , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                         Text="{Binding Name , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                          TextWrapping="Wrap"
                          BorderBrush="Gray">
                         <Validation.ErrorTemplate>
@@ -87,20 +87,6 @@ Background="White" Orientation="Horizontal">
 VerticalAlignment="Top"
 Background="White" Orientation="Horizontal">
 
-                    <Label Content="DateOfBirth:" Width="85"/>
-                    <TextBox Height="20" Width="120"
-                         Text="{Binding DateOfBirth , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:MM/dd/yyyy}}"
-                         TextWrapping="Wrap"
-                         BorderBrush="Gray">
-                        <Validation.ErrorTemplate>
-                            <ControlTemplate>
-                                <StackPanel>
-                                    <AdornedElementPlaceholder x:Name="placeholder"/>
-                                    <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red"/>
-                                </StackPanel>
-                            </ControlTemplate>
-                        </Validation.ErrorTemplate>
-                    </TextBox>
                 </StackPanel>
             </StackPanel>
         </GroupBox>

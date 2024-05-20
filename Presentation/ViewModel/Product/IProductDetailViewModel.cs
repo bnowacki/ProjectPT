@@ -5,10 +5,10 @@ namespace Presentation.ViewModel;
 
 public interface IProductDetailViewModel
 {
-    static IProductDetailViewModel CreateViewModel(int id, string name, double price, int pegi, 
+    static IProductDetailViewModel CreateViewModel(int id, string name, double price, 
         IProductModelOperation model, IErrorInformer informer)
     {
-        return new ProductDetailViewModel(id, name, price, pegi, model, informer);
+        return new ProductDetailViewModel(id, name, price, model, informer);
     }
 
     ICommand UpdateProduct { get; set; }
@@ -19,5 +19,4 @@ public interface IProductDetailViewModel
 
     double Price { get; set; }
 
-    int Pegi { get; set; }
 }

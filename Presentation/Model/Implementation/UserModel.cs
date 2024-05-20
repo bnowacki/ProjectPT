@@ -7,20 +7,14 @@ internal class UserModel : IUserModel
 {
     public int Id { get; set; }
 
-    public string Nickname { get; set; }
+    public string Name { get; set; }
 
     public string Email { get; set; }
 
-    public double Balance { get; set; }
-
-    public DateTime DateOfBirth { get; set; }
-
-    public UserModel(int id, string nickname, string email, double balance, DateTime date)
+    public UserModel(int id, string name, string email)
     {
         this.Id = id;
-        this.Nickname = nickname;
+        this.Name = name;
         this.Email = email;
-        this.Balance = balance;
-        this.DateOfBirth = date;
     }
 }

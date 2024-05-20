@@ -14,12 +14,12 @@ internal class ProductCRUD : IProductCRUD
 
     private IProductDTO Map(IProduct product)
     {
-        return new ProductDTO(product.Id, product.Name, product.Price, product.Pegi);
+        return new ProductDTO(product.Id, product.Name, product.Price);
     }
 
-    public async Task AddProductAsync(int id, string name, double price, int pegi)
+    public async Task AddProductAsync(int id, string name, double price)
     {
-        await this._repository.AddProductAsync(id, name, price, pegi);
+        await this._repository.AddProductAsync(id, name, price);
     }
 
     public async Task<IProductDTO> GetProductAsync(int id)
@@ -27,9 +27,9 @@ internal class ProductCRUD : IProductCRUD
         return this.Map(await this._repository.GetProductAsync(id));
     }
 
-    public async Task UpdateProductAsync(int id, string name, double price, int pegi)
+    public async Task UpdateProductAsync(int id, string name, double price)
     {
-        await this._repository.UpdateProductAsync(id, name, price, pegi);
+        await this._repository.UpdateProductAsync(id, name, price);
     }
 
     public async Task DeleteProductAsync(int id)

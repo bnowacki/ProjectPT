@@ -16,12 +16,12 @@ internal class ProductModelOperation : IProductModelOperation
 
     private IProductModel Map(IProductDTO product)
     {
-        return new ProductModel(product.Id, product.Name, product.Price, product.Pegi);
+        return new ProductModel(product.Id, product.Name, product.Price);
     }
 
-    public async Task AddAsync(int id, string name, double price, int pegi)
+    public async Task AddAsync(int id, string name, double price)
     {
-        await this._productCRUD.AddProductAsync(id, name, price, pegi);
+        await this._productCRUD.AddProductAsync(id, name, price);
     }
 
     public async Task<IProductModel> GetAsync(int id)
@@ -29,9 +29,9 @@ internal class ProductModelOperation : IProductModelOperation
         return this.Map(await this._productCRUD.GetProductAsync(id));
     }
 
-    public async Task UpdateAsync(int id, string name, double price, int pegi)
+    public async Task UpdateAsync(int id, string name, double price)
     {
-        await this._productCRUD.UpdateProductAsync(id, name, price, pegi);
+        await this._productCRUD.UpdateProductAsync(id, name, price);
     }
 
     public async Task DeleteAsync(int id)

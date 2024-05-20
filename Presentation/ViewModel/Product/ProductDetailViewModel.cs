@@ -48,57 +48,42 @@ internal class ProductDetailViewModel : IViewModel, IProductDetailViewModel
         }
     }
 
-    private int _pegi;
-
-    public int Pegi
-    {
-        get => _pegi;
-        set
-        {
-            _pegi = value;
-            OnPropertyChanged(nameof(Pegi));
-        }
-    }
-
     public ProductDetailViewModel(IProductModelOperation? model = null, IErrorInformer? informer = null)
     {
-        this.UpdateProduct = new OnClickCommand(e => this.Update(), c => this.CanUpdate());
+        UpdateProduct = new OnClickCommand(e => Update(), c => CanUpdate());
 
-        this._modelOperation = model ?? IProductModelOperation.CreateModelOperation();
-        this._informer = informer ?? new PopupErrorInformer();
+        _modelOperation = model ?? IProductModelOperation.CreateModelOperation();
+        _informer = informer ?? new PopupErrorInformer();
     }
 
-    public ProductDetailViewModel(int id, string name, double price, int pegi, IProductModelOperation? model = null, IErrorInformer? informer = null)
+    public ProductDetailViewModel(int id, string name, double price, IProductModelOperation? model = null, IErrorInformer? informer = null)
     {
-        this.Id = id;
-        this.Name = name;
-        this.Price = price;
-        this.Pegi = pegi;
+        Id = id;
+        Name = name;
+        Price = price;
 
-        this.UpdateProduct = new OnClickCommand(e => this.Update(), c => this.CanUpdate());
+        UpdateProduct = new OnClickCommand(e => Update(), c => CanUpdate());
 
-        this._modelOperation = model ?? IProductModelOperation.CreateModelOperation();
-        this._informer = informer ?? new PopupErrorInformer();
+        _modelOperation = model ?? IProductModelOperation.CreateModelOperation();
+        _informer = informer ?? new PopupErrorInformer();
     }
 
     private void Update()
     {
         Task.Run(() =>
         {
-            this._modelOperation.UpdateAsync(this.Id, this.Name, this.Price, this.Pegi);
+            _modelOperation.UpdateAsync(Id, Name, Price);
 
-            this._informer.InformSuccess("Product successfully updated!");
+            _informer.InformSuccess("Product successfully updated!");
         });
     }
 
     private bool CanUpdate()
     {
         return !(
-            string.IsNullOrWhiteSpace(this.Name) ||
-            string.IsNullOrWhiteSpace(this.Price.ToString()) ||
-            string.IsNullOrWhiteSpace(this.Pegi.ToString()) ||
-            this.Price == 0 ||
-            this.Pegi == 0
-        );
+            string.IsNullOrWhiteSpace(Name) ||
+            string.IsNullOrWhiteSpace(Price.ToString()) ||
+            Price == 0
+                    );
     }
 }

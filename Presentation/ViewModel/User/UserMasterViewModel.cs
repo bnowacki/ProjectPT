@@ -36,15 +36,15 @@ internal class UserMasterViewModel : IViewModel, IUserMasterViewModel
         }
     }
 
-    private string _nickname;
+    private string _name;
 
-    public string Nickname
+    public string Name
     {
-        get => _nickname;
+        get => _name;
         set
         {
-            _nickname = value;
-            OnPropertyChanged(nameof(Nickname));
+            _name = value;
+            OnPropertyChanged(nameof(Name));
         }
     }
 
@@ -57,18 +57,6 @@ internal class UserMasterViewModel : IViewModel, IUserMasterViewModel
         {
             _email = value;
             OnPropertyChanged(nameof(Email));
-        }
-    }
-
-    private double _balance;
-
-    public double Balance
-    {
-        get => _balance;
-        set
-        {
-            _balance = value;
-            OnPropertyChanged(nameof(Balance));
         }
     }
 
@@ -91,7 +79,7 @@ internal class UserMasterViewModel : IViewModel, IUserMasterViewModel
         get => _isUserSelected;
         set
         {
-            this.IsUserDetailVisible = value ? Visibility.Visible : Visibility.Hidden;
+            IsUserDetailVisible = value ? Visibility.Visible : Visibility.Hidden;
 
             _isUserSelected = value;
             OnPropertyChanged(nameof(IsUserSelected));
@@ -118,7 +106,7 @@ internal class UserMasterViewModel : IViewModel, IUserMasterViewModel
         set
         {
             _selectedDetailViewModel = value;
-            this.IsUserSelected = true;
+            IsUserSelected = true;
 
             OnPropertyChanged(nameof(SelectedDetailViewModel));
         }
@@ -126,31 +114,28 @@ internal class UserMasterViewModel : IViewModel, IUserMasterViewModel
 
     public UserMasterViewModel(IUserModelOperation? model = null, IErrorInformer? informer = null)
     {
-        this.SwitchToProductMasterPage = new SwitchViewCommand("ProductMasterView");
-        this.SwitchToStateMasterPage = new SwitchViewCommand("StateMasterView");
-        this.SwitchToEventMasterPage = new SwitchViewCommand("EventMasterView");
+        SwitchToProductMasterPage = new SwitchViewCommand("ProductMasterView");
+        SwitchToStateMasterPage = new SwitchViewCommand("StateMasterView");
+        SwitchToEventMasterPage = new SwitchViewCommand("EventMasterView");
 
-        this.CreateUser = new OnClickCommand(e => this.StoreUser(), c => this.CanStoreUser());
-        this.RemoveUser = new OnClickCommand(e => this.DeleteUser());
+        CreateUser = new OnClickCommand(e => StoreUser(), c => CanStoreUser());
+        RemoveUser = new OnClickCommand(e => DeleteUser());
 
-        this.Users = new ObservableCollection<IUserDetailViewModel>();
+        Users = new ObservableCollection<IUserDetailViewModel>();
 
-        this._modelOperation = model ?? IUserModelOperation.CreateModelOperation();
-        this._informer = informer ?? new PopupErrorInformer();
+        _modelOperation = model ?? IUserModelOperation.CreateModelOperation();
+        _informer = informer ?? new PopupErrorInformer();
 
-        this.IsUserSelected = false;
+        IsUserSelected = false;
 
-        Task.Run(this.LoadUsers);
+        Task.Run(LoadUsers);
     }
 
     private bool CanStoreUser()
     {
         return !(
-            string.IsNullOrWhiteSpace(this.Nickname) ||
-            string.IsNullOrWhiteSpace(this.Email) ||
-            string.IsNullOrWhiteSpace(this.Balance.ToString()) ||
-            string.IsNullOrWhiteSpace(this.DateOfBirth.ToString()) ||
-            this.Balance < 0
+            string.IsNullOrWhiteSpace(Name) ||
+            string.IsNullOrWhiteSpace(Email)
         );
     }
 
@@ -158,13 +143,13 @@ internal class UserMasterViewModel : IViewModel, IUserMasterViewModel
     {
         Task.Run(async () =>
         {
-            int lastId = await this._modelOperation.GetCountAsync() + 1;
+            int lastId = await _modelOperation.GetCountAsync() + 1;
 
-            await this._modelOperation.AddAsync(lastId, this.Nickname, this.Email, this.Balance, this.DateOfBirth);
+            await _modelOperation.AddAsync(lastId, Name, Email);
 
-            this._informer.InformSuccess("User successfully created!");
+            _informer.InformSuccess("User successfully created!");
 
-            this.LoadUsers();
+            LoadUsers();
         });
     }
 
@@ -174,30 +159,30 @@ internal class UserMasterViewModel : IViewModel, IUserMasterViewModel
         {
             try
             {
-                await this._modelOperation.DeleteAsync(this.SelectedDetailViewModel.Id);
+                await _modelOperation.DeleteAsync(SelectedDetailViewModel.Id);
 
-                this._informer.InformSuccess("User successfully deleted!");
+                _informer.InformSuccess("User successfully deleted!");
 
-                this.LoadUsers();
+                LoadUsers();
             }
             catch (Exception e)
             {
-                this._informer.InformError("Error while deleting user! Remember to remove all associated events!");
+                _informer.InformError("Error while deleting user! Remember to remove all associated events!");
             }
         });
     }
 
     private async void LoadUsers()
     {
-        Dictionary<int, IUserModel> Users = await this._modelOperation.GetAllAsync();
+        Dictionary<int, IUserModel> Users = await _modelOperation.GetAllAsync();
 
         Application.Current.Dispatcher.Invoke(() =>
         {
-            this._users.Clear();
+            _users.Clear();
 
             foreach (IUserModel u in Users.Values)
             {
-                this._users.Add(new UserDetailViewModel(u.Id, u.Nickname, u.Email, u.Balance, u.DateOfBirth));
+                _users.Add(new UserDetailViewModel(u.Id, u.Name, u.Email));
             }
         });
 

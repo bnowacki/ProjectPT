@@ -11,11 +11,11 @@ public interface IDataRepository
 
     #region User CRUD
 
-    Task AddUserAsync(int id, string nickname, string email, double balance, DateTime dateOfBirth);
+    Task AddUserAsync(int id, string name, string email);
 
     Task<IUser> GetUserAsync(int id);
 
-    Task UpdateUserAsync(int id, string nickname, string email, double balance, DateTime dateOfBirth);
+    Task UpdateUserAsync(int id, string name, string email);
 
     Task DeleteUserAsync(int id);
 
@@ -28,11 +28,11 @@ public interface IDataRepository
 
     #region Product CRUD
 
-    Task AddProductAsync(int id, string name, double price, int pegi);
+    Task AddProductAsync(int id, string name, double price);
 
     Task<IProduct> GetProductAsync(int id);
 
-    Task UpdateProductAsync(int id, string name, double price, int pegi);
+    Task UpdateProductAsync(int id, string name, double price);
 
     Task DeleteProductAsync(int id);
 

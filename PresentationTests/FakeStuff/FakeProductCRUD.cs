@@ -11,9 +11,9 @@ internal class FakeProductCRUD : IProductCRUD
 
     }
 
-    public async Task AddProductAsync(int id, string name, double price, int pegi)
+    public async Task AddProductAsync(int id, string name, double price)
     {
-        await this._fakeRepository.AddProductAsync(id, name, price, pegi);
+        await this._fakeRepository.AddProductAsync(id, name, price);
     }
 
     public async Task<IProductDTO> GetProductAsync(int id)
@@ -21,9 +21,9 @@ internal class FakeProductCRUD : IProductCRUD
         return await this._fakeRepository.GetProductAsync(id);
     }
 
-    public async Task UpdateProductAsync(int id, string name, double price, int pegi)
+    public async Task UpdateProductAsync(int id, string name, double price)
     {
-        await this._fakeRepository.UpdateProductAsync(id, name, price, pegi);
+        await this._fakeRepository.UpdateProductAsync(id, name, price);
     }
 
     public async Task DeleteProductAsync(int id)

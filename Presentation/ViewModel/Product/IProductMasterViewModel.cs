@@ -22,8 +22,6 @@ public interface IProductMasterViewModel
 
     double Price { get; set; }
 
-    int Pegi { get; set; }
-
     bool IsProductSelected { get; set; }
 
     Visibility IsProductDetailVisible { get; set; }

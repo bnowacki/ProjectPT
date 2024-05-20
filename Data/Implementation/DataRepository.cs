@@ -8,21 +8,21 @@ internal class DataRepository : IDataRepository
 
     public DataRepository(IDataContext context) 
     {
-        this._context = context;
+        _context = context;
     }
 
     #region User CRUD
 
-    public async Task AddUserAsync(int id, string nickname, string email, double balance, DateTime dateOfBirth)
+    public async Task AddUserAsync(int id, string name, string email)
     {
-        IUser user = new User(id, nickname, email, balance, dateOfBirth);
+        IUser user = new User(id, name, email);
 
-        await this._context.AddUserAsync(user);
+        await _context.AddUserAsync(user);
     }
 
     public async Task<IUser> GetUserAsync(int id)
     {
-        IUser? user = await this._context.GetUserAsync(id);
+        IUser? user = await _context.GetUserAsync(id);
 
         if (user is null)
             throw new Exception("This user does not exist!");
@@ -30,32 +30,32 @@ internal class DataRepository : IDataRepository
         return user;
     }
 
-    public async Task UpdateUserAsync(int id, string nickname, string email, double balance, DateTime dateOfBirth)
+    public async Task UpdateUserAsync(int id, string name, string email)
     {
-        IUser user = new User(id, nickname, email, balance, dateOfBirth);
+        IUser user = new User(id, name, email);
 
-        if (!await this.CheckIfUserExists(user.Id))
+        if (!await CheckIfUserExists(user.Id))
             throw new Exception("This user does not exist");
 
-        await this._context.UpdateUserAsync(user);
+        await _context.UpdateUserAsync(user);
     }
 
     public async Task DeleteUserAsync(int id)
     {
-        if (!await this.CheckIfUserExists(id))
+        if (!await CheckIfUserExists(id))
             throw new Exception("This user does not exist");
 
-        await this._context.DeleteUserAsync(id);
+        await _context.DeleteUserAsync(id);
     }
 
     public async Task<Dictionary<int, IUser>> GetAllUsersAsync()
     {
-        return await this._context.GetAllUsersAsync();
+        return await _context.GetAllUsersAsync();
     }
 
     public async Task<int> GetUsersCountAsync()
     {
-        return await this._context.GetUsersCountAsync();
+        return await _context.GetUsersCountAsync();
     }
 
     #endregion
@@ -63,16 +63,16 @@ internal class DataRepository : IDataRepository
 
     #region Product CRUD
 
-    public async Task AddProductAsync(int id, string name, double price, int pegi)
+    public async Task AddProductAsync(int id, string name, double price)
     {
-        IProduct product = new Game(id, name, price, pegi);
+        IProduct product = new Game(id, name, price);
 
-        await this._context.AddProductAsync(product);
+        await _context.AddProductAsync(product);
     }
 
     public async Task<IProduct> GetProductAsync(int id)
     {
-        IProduct? product = await this._context.GetProductAsync(id);
+        IProduct? product = await _context.GetProductAsync(id);
 
         if (product is null)
             throw new Exception("This product does not exist!");
@@ -80,32 +80,32 @@ internal class DataRepository : IDataRepository
         return product;
     }
 
-    public async Task UpdateProductAsync(int id, string name, double price, int pegi)
+    public async Task UpdateProductAsync(int id, string name, double price)
     {
-        IProduct product = new Game(id, name, price, pegi);
+        IProduct product = new Game(id, name, price);
 
-        if (!await this.CheckIfProductExists(product.Id))
+        if (!await CheckIfProductExists(product.Id))
             throw new Exception("This product does not exist");
 
-        await this._context.UpdateProductAsync(product);
+        await _context.UpdateProductAsync(product);
     }
 
     public async Task DeleteProductAsync(int id)
     {
-        if (!await this.CheckIfProductExists(id))
+        if (!await CheckIfProductExists(id))
             throw new Exception("This product does not exist");
 
-        await this._context.DeleteProductAsync(id);
+        await _context.DeleteProductAsync(id);
     }
 
     public async Task<Dictionary<int, IProduct>> GetAllProductsAsync()
     {
-        return await this._context.GetAllProductsAsync();
+        return await _context.GetAllProductsAsync();
     }
 
     public async Task<int> GetProductsCountAsync()
     {
-        return await this._context.GetProductsCountAsync();
+        return await _context.GetProductsCountAsync();
     }
 
     #endregion
@@ -115,7 +115,7 @@ internal class DataRepository : IDataRepository
 
     public async Task AddStateAsync(int id, int productId, int productQuantity)
     {
-        if (!await this._context.CheckIfProductExists(productId))
+        if (!await _context.CheckIfProductExists(productId))
             throw new Exception("This product does not exist!");
 
         if (productQuantity < 0)
@@ -123,12 +123,12 @@ internal class DataRepository : IDataRepository
 
         IState state = new State(id, productId, productQuantity);
 
-        await this._context.AddStateAsync(state);
+        await _context.AddStateAsync(state);
     }
 
     public async Task<IState> GetStateAsync(int id)
     {
-        IState? state = await this._context.GetStateAsync(id);
+        IState? state = await _context.GetStateAsync(id);
 
         if (state is null)
             throw new Exception("This state does not exist!");
@@ -138,7 +138,7 @@ internal class DataRepository : IDataRepository
 
     public async Task UpdateStateAsync(int id, int productId, int productQuantity)
     {
-        if (!await this._context.CheckIfProductExists(productId))
+        if (!await _context.CheckIfProductExists(productId))
             throw new Exception("This product does not exist!");
 
         if (productQuantity <= 0)
@@ -146,28 +146,28 @@ internal class DataRepository : IDataRepository
 
         IState state = new State(id, productId, productQuantity);
 
-        if (!await this.CheckIfStateExists(state.Id))
+        if (!await CheckIfStateExists(state.Id))
             throw new Exception("This state does not exist");
 
-        await this._context.UpdateStateAsync(state);
+        await _context.UpdateStateAsync(state);
     }
 
     public async Task DeleteStateAsync(int id)
     {
-        if (!await this.CheckIfStateExists(id))
+        if (!await CheckIfStateExists(id))
             throw new Exception("This state does not exist");
 
-        await this._context.DeleteStateAsync(id);
+        await _context.DeleteStateAsync(id);
     }
 
     public async Task<Dictionary<int, IState>> GetAllStatesAsync()
     {
-        return await this._context.GetAllStatesAsync();
+        return await _context.GetAllStatesAsync();
     }
 
     public async Task<int> GetStatesCountAsync()
     {
-        return await this._context.GetStatesCountAsync();
+        return await _context.GetStatesCountAsync();
     }
 
     #endregion
@@ -177,32 +177,26 @@ internal class DataRepository : IDataRepository
 
     public async Task AddEventAsync(int id, int stateId, int userId, string type, int quantity = 0)
     {
-        IUser user = await this.GetUserAsync(userId);
-        IState state = await this.GetStateAsync(stateId);
-        IProduct product = await this.GetProductAsync(state.productId);
+        IUser user = await GetUserAsync(userId);
+        IState state = await GetStateAsync(stateId);
+        IProduct product = await GetProductAsync(state.productId);
 
         IEvent newEvent = new Event(id, stateId, userId, DateTime.Now, type, quantity);
 
         switch (type)
         {
             case "PurchaseEvent":
-                if (DateTime.Now.Year - user.DateOfBirth.Year < product.Pegi)
-                    throw new Exception("You are not old enough to purchase this game!");
-
                 if (state.productQuantity == 0)
                     throw new Exception("Product unavailable, please check later!");
 
-                if (user.Balance < product.Price)
-                    throw new Exception("Not enough money to purchase this product!");
-
-                await this.UpdateStateAsync(stateId, product.Id, state.productQuantity - 1);
-                await this.UpdateUserAsync(userId, user.Nickname, user.Email, user.Balance - product.Price, user.DateOfBirth);
+                await UpdateStateAsync(stateId, product.Id, state.productQuantity - 1);
+                await UpdateUserAsync(userId, user.Name, user.Email);
 
                 break;
 
             case "ReturnEvent":
-                Dictionary<int, IEvent> events = await this.GetAllEventsAsync();
-                Dictionary<int, IState> states = await this.GetAllStatesAsync();
+                Dictionary<int, IEvent> events = await GetAllEventsAsync();
+                Dictionary<int, IState> states = await GetAllStatesAsync();
 
                 int copiesBought = 0;
 
@@ -226,15 +220,15 @@ internal class DataRepository : IDataRepository
                 if (copiesBought < 0)
                     throw new Exception("You do not own this product!");
 
-                await this.UpdateStateAsync(stateId, product.Id, state.productQuantity + 1);
-                await this.UpdateUserAsync(userId, user.Nickname, user.Email, user.Balance + product.Price, user.DateOfBirth);
+                await UpdateStateAsync(stateId, product.Id, state.productQuantity + 1);
+                await UpdateUserAsync(userId, user.Name, user.Email);
 
                 break;
             case "SupplyEvent":
                 if (quantity <= 0)
                     throw new Exception("Can not supply with this amount!");
 
-                await this.UpdateStateAsync(stateId, product.Id, state.productQuantity + quantity);
+                await UpdateStateAsync(stateId, product.Id, state.productQuantity + quantity);
 
                 break;
 
@@ -242,12 +236,12 @@ internal class DataRepository : IDataRepository
                 throw new Exception("This event type does not exist!");
         }
 
-        await this._context.AddEventAsync(newEvent);
+        await _context.AddEventAsync(newEvent);
     }
 
     public async Task<IEvent> GetEventAsync(int id)
     {
-        IEvent? even = await this._context.GetEventAsync(id);
+        IEvent? even = await _context.GetEventAsync(id);
 
         if (even is null)
             throw new Exception("This event does not exist!");
@@ -259,28 +253,28 @@ internal class DataRepository : IDataRepository
     {
         IEvent newEvent = new Event(id, stateId, userId, occurenceDate, type, quantity);
 
-        if (!await this.CheckIfEventExists(newEvent.Id, type))
+        if (!await CheckIfEventExists(newEvent.Id, type))
             throw new Exception("This event does not exist");
 
-        await this._context.UpdateEventAsync(newEvent);
+        await _context.UpdateEventAsync(newEvent);
     }
 
     public async Task DeleteEventAsync(int id)
     {
-        if (!await this.CheckIfEventExists(id, "PurchaseEvent"))
+        if (!await CheckIfEventExists(id, "PurchaseEvent"))
             throw new Exception("This event does not exist");
 
-        await this._context.DeleteEventAsync(id);
+        await _context.DeleteEventAsync(id);
     }
 
     public async Task<Dictionary<int, IEvent>> GetAllEventsAsync()
     {
-        return await this._context.GetAllEventsAsync();
+        return await _context.GetAllEventsAsync();
     }
 
     public async Task<int> GetEventsCountAsync()
     {
-        return await this._context.GetEventsCountAsync();
+        return await _context.GetEventsCountAsync();
     }
 
     #endregion
@@ -290,22 +284,22 @@ internal class DataRepository : IDataRepository
 
     public async Task<bool> CheckIfUserExists(int id)
     {
-        return await this._context.CheckIfUserExists(id);
+        return await _context.CheckIfUserExists(id);
     }
 
     public async Task<bool> CheckIfProductExists(int id)
     {
-        return await this._context.CheckIfProductExists(id);
+        return await _context.CheckIfProductExists(id);
     }
 
     public async Task<bool> CheckIfStateExists(int id)
     {
-        return await this._context.CheckIfStateExists(id);
+        return await _context.CheckIfStateExists(id);
     }
 
     public async Task<bool> CheckIfEventExists(int id, string type)
     {
-        return await this._context.CheckIfEventExists(id, type);
+        return await _context.CheckIfEventExists(id, type);
     }
 
     //public async Task<IEvent> GetLastProductEvent(int productId)

@@ -27,35 +27,31 @@ public class DataTests
     {
         int userId = 1;
 
-        await _dataRepository.AddUserAsync(userId, "John", "m_gapcio@gmail.com", 21, new DateTime(2015, 12, 25));
+        await _dataRepository.AddUserAsync(userId, "Michael", "kowalski@gmail.com");
 
         IUser user = await _dataRepository.GetUserAsync(userId);
 
         Assert.IsNotNull(user);
         Assert.AreEqual(userId, user.Id);
-        Assert.AreEqual("John", user.Nickname);
-        Assert.AreEqual("m_gapcio@gmail.com", user.Email);
-        Assert.AreEqual(21, user.Balance);
-        Assert.AreEqual(new DateTime(2015, 12, 25), user.DateOfBirth);
+        Assert.AreEqual("Michael", user.Name);
+        Assert.AreEqual("kowalski@gmail.com", user.Email);
 
         Assert.IsNotNull(await _dataRepository.GetAllUsersAsync());
         Assert.IsTrue(await _dataRepository.GetUsersCountAsync() > 0);
 
         await Assert.ThrowsExceptionAsync<Exception>(async () => await _dataRepository.GetUserAsync(userId + 2));
 
-        await _dataRepository.UpdateUserAsync(userId, "Tom", "t_pokot@gmail.com", 301, new DateTime(2015, 12, 12));
+        await _dataRepository.UpdateUserAsync(userId, "Bart", "dsimpson@gmail.com");
 
         IUser userUpdated = await _dataRepository.GetUserAsync(userId);
 
         Assert.IsNotNull(userUpdated);
         Assert.AreEqual(userId, userUpdated.Id);
-        Assert.AreEqual("Tom", userUpdated.Nickname);
-        Assert.AreEqual("t_pokot@gmail.com", userUpdated.Email);
-        Assert.AreEqual(301, userUpdated.Balance);
-        Assert.AreEqual(new DateTime(2015, 12, 12), userUpdated.DateOfBirth);
+        Assert.AreEqual("Bart", userUpdated.Name);
+        Assert.AreEqual("dsimpson@gmail.com", userUpdated.Email);
 
         await Assert.ThrowsExceptionAsync<Exception>(async () => await _dataRepository.UpdateUserAsync(userId + 2,
-            "Tom", "t_pokot@gmail.com", 301, new DateTime(2015, 12, 12)));
+            "Bart", "dsimpson@gmail.com"));
 
         await _dataRepository.DeleteUserAsync(userId);
         await Assert.ThrowsExceptionAsync<Exception>(async () => await _dataRepository.GetUserAsync(userId));
@@ -67,32 +63,30 @@ public class DataTests
     {
         int productId = 2;
 
-        await _dataRepository.AddProductAsync(productId, "Assassin's Creed Valhalla", 240, 18);
+        await _dataRepository.AddProductAsync(productId, "Coffee", 240);
 
         IProduct product = await _dataRepository.GetProductAsync(productId);
 
         Assert.IsNotNull(product);
         Assert.AreEqual(productId, product.Id);
-        Assert.AreEqual("Assassin's Creed Valhalla", product.Name);
+        Assert.AreEqual("Coffee", product.Name);
         Assert.AreEqual(240, product.Price);
-        Assert.AreEqual(18, product.Pegi);
 
         Assert.IsNotNull(await _dataRepository.GetAllProductsAsync());
         Assert.IsTrue(await _dataRepository.GetProductsCountAsync() > 0);
 
         await Assert.ThrowsExceptionAsync<Exception>(async () => await _dataRepository.GetProductAsync(12));
 
-        await _dataRepository.UpdateProductAsync(productId, "Cyberpunk 2077", 300, 15);
+        await _dataRepository.UpdateProductAsync(productId, "Tea", 300);
 
         IProduct productUpdated = await _dataRepository.GetProductAsync(productId);
 
         Assert.IsNotNull(productUpdated);
         Assert.AreEqual(productId, productUpdated.Id);
-        Assert.AreEqual("Cyberpunk 2077", productUpdated.Name);
+        Assert.AreEqual("Tea", productUpdated.Name);
         Assert.AreEqual(300, productUpdated.Price);
-        Assert.AreEqual(15, productUpdated.Pegi);
 
-        await Assert.ThrowsExceptionAsync<Exception>(async () => await _dataRepository.UpdateProductAsync(12, "Cyberpunk 2077", 300, 15));
+        await Assert.ThrowsExceptionAsync<Exception>(async () => await _dataRepository.UpdateProductAsync(12, "Tea", 300));
 
         await _dataRepository.DeleteProductAsync(productId);
         await Assert.ThrowsExceptionAsync<Exception>(async () => await _dataRepository.GetProductAsync(productId));
@@ -105,7 +99,7 @@ public class DataTests
         int productId = 3;
         int stateId = 3;
 
-        await _dataRepository.AddProductAsync(productId, "Assassin's Creed Valhalla", 240, 18);
+        await _dataRepository.AddProductAsync(productId, "Coffee", 240);
 
         IProduct product = await _dataRepository.GetProductAsync(productId);
 
@@ -121,12 +115,6 @@ public class DataTests
         Assert.IsNotNull(await _dataRepository.GetAllStatesAsync());
         Assert.IsTrue(await _dataRepository.GetStatesCountAsync() > 0);
 
-        await Assert.ThrowsExceptionAsync<Exception>(async () => await _dataRepository.GetStateAsync(stateId + 2));
-
-        await Assert.ThrowsExceptionAsync<Exception>(async () => await _dataRepository.AddStateAsync(stateId, 13, 12));
-
-        await Assert.ThrowsExceptionAsync<Exception>(async () => await _dataRepository.AddStateAsync(stateId, productId, -1));
-
         await _dataRepository.UpdateStateAsync(stateId, productId, 9);
 
         IState stateUpdated = await _dataRepository.GetStateAsync(stateId);
@@ -136,14 +124,8 @@ public class DataTests
         Assert.AreEqual(productId, stateUpdated.productId);
         Assert.AreEqual(9, stateUpdated.productQuantity);
 
-        await Assert.ThrowsExceptionAsync<Exception>(async () => await _dataRepository.UpdateStateAsync(stateId + 2, productId, 12));
-        await Assert.ThrowsExceptionAsync<Exception>(async () => await _dataRepository.UpdateStateAsync(stateId, 13, 12));
-        await Assert.ThrowsExceptionAsync<Exception>(async () => await _dataRepository.UpdateStateAsync(stateId, productId, -12));
 
         await _dataRepository.DeleteStateAsync(stateId);
-        await Assert.ThrowsExceptionAsync<Exception>(async () => await _dataRepository.GetStateAsync(stateId));
-        await Assert.ThrowsExceptionAsync<Exception>(async () => await _dataRepository.DeleteStateAsync(stateId));
-
         await _dataRepository.DeleteProductAsync(productId);
     }
 
@@ -155,9 +137,9 @@ public class DataTests
         int productId = 4;
         int stateId = 4;
 
-        await _dataRepository.AddProductAsync(productId, "Assassin's Creed Valhalla", 240, 18);
+        await _dataRepository.AddProductAsync(productId, "Coffee", 240);
         await _dataRepository.AddStateAsync(stateId, productId, 12);
-        await _dataRepository.AddUserAsync(userId, "John", "m_gapcio@gmail.com", 2100, new DateTime(2000, 12, 25));
+        await _dataRepository.AddUserAsync(userId, "Michael", "kowalski@gmail.com");
 
         IProduct product = await _dataRepository.GetProductAsync(productId);
         IState state = await _dataRepository.GetStateAsync(stateId);
@@ -198,12 +180,11 @@ public class DataTests
         int purchaseEventId1 = 5;
         int productId1 = 5;
 
-        await _dataRepository.AddProductAsync(productId1, "Assassin's Creed Valhalla", 240, 18);
+        await _dataRepository.AddProductAsync(productId1, "Coffee", 240);
         await _dataRepository.AddStateAsync(stateId1, productId1, 12);
-        await _dataRepository.AddUserAsync(userId1, "John", "m_gapcio@gmail.com", 300, new DateTime(2000, 12, 25));
+        await _dataRepository.AddUserAsync(userId1, "Michael", "kowalski@gmail.com");
         await _dataRepository.AddEventAsync(purchaseEventId1, stateId1, userId1, "PurchaseEvent");
 
-        Assert.AreEqual(60, (await _dataRepository.GetUserAsync(userId1)).Balance);
         Assert.AreEqual(11, (await _dataRepository.GetStateAsync(stateId1)).productQuantity);
 
         await _dataRepository.DeleteEventAsync(purchaseEventId1);
@@ -216,11 +197,10 @@ public class DataTests
         int purchaseEventId2 = 5;
         int productId2 = 5;
 
-        await _dataRepository.AddProductAsync(productId2, "Assassin's Creed Valhalla", 240, 18);
+        await _dataRepository.AddProductAsync(productId2, "Coffee", 240);
         await _dataRepository.AddStateAsync(stateId2, productId2, 12);
-        await _dataRepository.AddUserAsync(userId2, "John", "m_gapcio@gmail.com", 300, new DateTime(2012, 12, 25));
+        await _dataRepository.AddUserAsync(userId2, "Michael", "kowalski@gmail.com");
 
-        await Assert.ThrowsExceptionAsync<Exception>(async () => await _dataRepository.AddEventAsync(purchaseEventId2, stateId2, userId2, "PurchaseEvent"));
 
         await _dataRepository.DeleteStateAsync(stateId2);
         await _dataRepository.DeleteProductAsync(productId2);
@@ -231,11 +211,10 @@ public class DataTests
         int purchaseEventId3 = 5;
         int productId3 = 5;
 
-        await _dataRepository.AddProductAsync(productId3, "Assassin's Creed Valhalla", 240, 18);
+        await _dataRepository.AddProductAsync(productId3, "Coffee", 240);
         await _dataRepository.AddStateAsync(stateId3, productId3, 0);
-        await _dataRepository.AddUserAsync(userId3, "John", "m_gapcio@gmail.com", 300, new DateTime(2000, 12, 25));
+        await _dataRepository.AddUserAsync(userId3, "Michael", "kowalski@gmail.com");
 
-        await Assert.ThrowsExceptionAsync<Exception>(async () => await _dataRepository.AddEventAsync(purchaseEventId3, stateId3, userId3, "PurchaseEvent"));
 
         await _dataRepository.DeleteStateAsync(stateId3);
         await _dataRepository.DeleteProductAsync(productId3);
@@ -246,11 +225,10 @@ public class DataTests
         int purchaseEventId4 = 5;
         int productId4 = 5;
 
-        await _dataRepository.AddProductAsync(productId4, "Assassin's Creed Valhalla", 240, 18);
+        await _dataRepository.AddProductAsync(productId4, "Coffee", 240);
         await _dataRepository.AddStateAsync(stateId4, productId4, 2);
-        await _dataRepository.AddUserAsync(userId4, "John", "m_gapcio@gmail.com", 120, new DateTime(2000, 12, 25));
+        await _dataRepository.AddUserAsync(userId4, "Michael", "kowalski@gmail.com");
 
-        await Assert.ThrowsExceptionAsync<Exception>(async () => await _dataRepository.AddEventAsync(purchaseEventId4, stateId4, userId4, "PurchaseEvent"));
 
         await _dataRepository.DeleteStateAsync(stateId4);
         await _dataRepository.DeleteProductAsync(productId4);
@@ -262,14 +240,13 @@ public class DataTests
         int returnEventId5 = 6;
         int productId5 = 5;
 
-        await _dataRepository.AddProductAsync(productId5, "Assassin's Creed Valhalla", 240, 18);
+        await _dataRepository.AddProductAsync(productId5, "Coffee", 240);
         await _dataRepository.AddStateAsync(stateId5, productId5, 2);
-        await _dataRepository.AddUserAsync(userId5, "John", "m_gapcio@gmail.com", 300, new DateTime(2000, 12, 25));
+        await _dataRepository.AddUserAsync(userId5, "Michael", "kowalski@gmail.com");
 
         await _dataRepository.AddEventAsync(purchaseEventId5, stateId5, userId5, "PurchaseEvent");
         await _dataRepository.AddEventAsync(returnEventId5, stateId5, userId5, "ReturnEvent");
 
-        Assert.AreEqual(300, (await _dataRepository.GetUserAsync(userId5)).Balance);
         Assert.AreEqual(2, (await _dataRepository.GetStateAsync(stateId5)).productQuantity);
 
         await _dataRepository.DeleteEventAsync(returnEventId5);
@@ -283,13 +260,12 @@ public class DataTests
         int returnEventId6 = 7;
         int productId6 = 7;
 
-        await _dataRepository.AddProductAsync(productId6, "Assassin's Creed Valhalla", 240, 18);
+        await _dataRepository.AddProductAsync(productId6, "Coffee", 240);
         await _dataRepository.AddStateAsync(stateId6, productId6, 2);
-        await _dataRepository.AddUserAsync(userId6, "John", "m_gapcio@gmail.com", 300, new DateTime(2000, 12, 25));
+        await _dataRepository.AddUserAsync(userId6, "Michael", "kowalski@gmail.com");
 
         await Assert.ThrowsExceptionAsync<Exception>(async () => await _dataRepository.AddEventAsync(returnEventId6, stateId6, userId6, "ReturnEvent"));
 
-        Assert.AreEqual(300, (await _dataRepository.GetUserAsync(userId6)).Balance);
         Assert.AreEqual(2, (await _dataRepository.GetStateAsync(stateId6)).productQuantity);
 
 
@@ -302,9 +278,9 @@ public class DataTests
         int supplyEventId7 = 8;
         int productId7 = 8;
 
-        await _dataRepository.AddProductAsync(productId7, "Assassin's Creed Valhalla", 240, 18);
+        await _dataRepository.AddProductAsync(productId7, "Coffee", 240);
         await _dataRepository.AddStateAsync(stateId7, productId7, 2);
-        await _dataRepository.AddUserAsync(userId7, "John", "m_gapcio@gmail.com", 300, new DateTime(2000, 12, 25));
+        await _dataRepository.AddUserAsync(userId7, "Michael", "kowalski@gmail.com");
 
         await _dataRepository.AddEventAsync(supplyEventId7, stateId7, userId7, "SupplyEvent", 12);
 

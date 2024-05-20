@@ -14,9 +14,9 @@ internal class FakeDataRepository
 
     #region User CRUD
 
-    public async Task AddUserAsync(int id, string nickname, string email, double balance, DateTime dateOfBirth)
+    public async Task AddUserAsync(int id, string name, string email)
     {
-        this.Users.Add(id, new FakeUserDTO(id, nickname, email, balance, dateOfBirth));
+        this.Users.Add(id, new FakeUserDTO(id, name, email));
     }
 
     public async Task<IUserDTO> GetUserAsync(int id)
@@ -24,12 +24,10 @@ internal class FakeDataRepository
         return await Task.FromResult(this.Users[id]);
     }
 
-    public async Task UpdateUserAsync(int id, string nickname, string email, double balance, DateTime dateOfBirth)
+    public async Task UpdateUserAsync(int id, string name, string email)
     {
-        this.Users[id].Nickname = nickname;
+        this.Users[id].Name = name;
         this.Users[id].Email = email;
-        this.Users[id].Balance = balance;
-        this.Users[id].DateOfBirth = dateOfBirth;
     }
 
     public async Task DeleteUserAsync(int id)
@@ -57,9 +55,9 @@ internal class FakeDataRepository
 
     #region Product CRUD
 
-    public async Task AddProductAsync(int id, string name, double price, int pegi)
+    public async Task AddProductAsync(int id, string name, double price)
     {
-        this.Products.Add(id, new FakeProductDTO(id, name, price, pegi));
+        this.Products.Add(id, new FakeProductDTO(id, name, price));
     }
 
     public async Task<IProductDTO> GetProductAsync(int id)
@@ -67,11 +65,10 @@ internal class FakeDataRepository
         return await Task.FromResult(this.Products[id]);
     }
 
-    public async Task UpdateProductAsync(int id, string name, double price, int pegi)
+    public async Task UpdateProductAsync(int id, string name, double price)
     {
         this.Products[id].Name = name;
         this.Products[id].Price = price;
-        this.Products[id].Pegi = pegi;
     }
 
     public async Task DeleteProductAsync(int id)
@@ -139,17 +136,12 @@ internal class FakeDataRepository
         switch (type)
         {
             case "PurchaseEvent":
-                if (DateTime.Now.Year - user.DateOfBirth.Year < product.Pegi)
-                    throw new Exception("You are not old enough to purchase this game!");
-
+                
                 if (state.productQuantity == 0)
                     throw new Exception("Product unavailable, please check later!");
 
-                if (user.Balance < product.Price)
-                    throw new Exception("Not enough money to purchase this product!");
-
                 await this.UpdateStateAsync(stateId, product.Id, state.productQuantity - 1);
-                await this.UpdateUserAsync(userId, user.Nickname, user.Email, user.Balance - product.Price, user.DateOfBirth);
+                await this.UpdateUserAsync(userId, user.Name, user.Email);
 
                 break;
 
@@ -180,7 +172,7 @@ internal class FakeDataRepository
                     throw new Exception("You do not own this product!");
 
                 await this.UpdateStateAsync(stateId, product.Id, state.productQuantity + 1);
-                await this.UpdateUserAsync(userId, user.Nickname, user.Email, user.Balance + product.Price, user.DateOfBirth);
+                await this.UpdateUserAsync(userId, user.Name, user.Email);
 
                 break;
 

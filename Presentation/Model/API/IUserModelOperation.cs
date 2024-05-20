@@ -13,11 +13,11 @@ public interface IUserModelOperation
         return new UserModelOperation(userCrud);
     }
 
-    Task AddAsync(int id, string nickname, string email, double balance, DateTime dateOfBirth);
+    Task AddAsync(int id, string name, string email);
 
     Task<IUserModel> GetAsync(int id);
 
-    Task UpdateAsync(int id, string nickname, string email, double balance, DateTime dateOfBirth);
+    Task UpdateAsync(int id, string name, string email);
 
     Task DeleteAsync(int id);
 

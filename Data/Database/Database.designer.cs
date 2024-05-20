@@ -33,12 +33,12 @@ namespace Data.Database
     partial void InsertEvent(Event instance);
     partial void UpdateEvent(Event instance);
     partial void DeleteEvent(Event instance);
-    partial void InsertUser(User instance);
-    partial void UpdateUser(User instance);
-    partial void DeleteUser(User instance);
     partial void InsertState(State instance);
     partial void UpdateState(State instance);
     partial void DeleteState(State instance);
+    partial void InsertUser(User instance);
+    partial void UpdateUser(User instance);
+    partial void DeleteUser(User instance);
     partial void InsertProduct(Product instance);
     partial void UpdateProduct(Product instance);
     partial void DeleteProduct(Product instance);
@@ -76,19 +76,19 @@ namespace Data.Database
 			}
 		}
 		
-		public System.Data.Linq.Table<User> Users
-		{
-			get
-			{
-				return this.GetTable<User>();
-			}
-		}
-		
 		public System.Data.Linq.Table<State> States
 		{
 			get
 			{
 				return this.GetTable<State>();
+			}
+		}
+		
+		public System.Data.Linq.Table<User> Users
+		{
+			get
+			{
+				return this.GetTable<User>();
 			}
 		}
 		
@@ -119,9 +119,9 @@ namespace Data.Database
 		
 		private System.Nullable<int> _quantity;
 		
-		private EntityRef<User> _User;
-		
 		private EntityRef<State> _State;
+		
+		private EntityRef<User> _User;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -143,8 +143,8 @@ namespace Data.Database
 		
 		public Event()
 		{
-			this._User = default(EntityRef<User>);
 			this._State = default(EntityRef<State>);
+			this._User = default(EntityRef<User>);
 			OnCreated();
 		}
 		
@@ -276,40 +276,6 @@ namespace Data.Database
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Event", Storage="_User", ThisKey="userId", OtherKey="id", IsForeignKey=true)]
-		public User User
-		{
-			get
-			{
-				return this._User.Entity;
-			}
-			set
-			{
-				User previousValue = this._User.Entity;
-				if (((previousValue != value) 
-							|| (this._User.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._User.Entity = null;
-						previousValue.Events.Remove(this);
-					}
-					this._User.Entity = value;
-					if ((value != null))
-					{
-						value.Events.Add(this);
-						this._userId = value.id;
-					}
-					else
-					{
-						this._userId = default(int);
-					}
-					this.SendPropertyChanged("User");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="State_Event", Storage="_State", ThisKey="stateId", OtherKey="id", IsForeignKey=true)]
 		public State State
 		{
@@ -344,177 +310,37 @@ namespace Data.Database
 			}
 		}
 		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Users")]
-	public partial class User : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private string _nickname;
-		
-		private string _email;
-		
-		private decimal _balance;
-		
-		private System.DateTime _dateOfBirth;
-		
-		private EntitySet<Event> _Events;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void OnnicknameChanging(string value);
-    partial void OnnicknameChanged();
-    partial void OnemailChanging(string value);
-    partial void OnemailChanged();
-    partial void OnbalanceChanging(decimal value);
-    partial void OnbalanceChanged();
-    partial void OndateOfBirthChanging(System.DateTime value);
-    partial void OndateOfBirthChanged();
-    #endregion
-		
-		public User()
-		{
-			this._Events = new EntitySet<Event>(new Action<Event>(this.attach_Events), new Action<Event>(this.detach_Events));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int id
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Event", Storage="_User", ThisKey="userId", OtherKey="id", IsForeignKey=true)]
+		public User User
 		{
 			get
 			{
-				return this._id;
+				return this._User.Entity;
 			}
 			set
 			{
-				if ((this._id != value))
+				User previousValue = this._User.Entity;
+				if (((previousValue != value) 
+							|| (this._User.HasLoadedOrAssignedValue == false)))
 				{
-					this.OnidChanging(value);
 					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
+					if ((previousValue != null))
+					{
+						this._User.Entity = null;
+						previousValue.Events.Remove(this);
+					}
+					this._User.Entity = value;
+					if ((value != null))
+					{
+						value.Events.Add(this);
+						this._userId = value.id;
+					}
+					else
+					{
+						this._userId = default(int);
+					}
+					this.SendPropertyChanged("User");
 				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_nickname", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
-		public string nickname
-		{
-			get
-			{
-				return this._nickname;
-			}
-			set
-			{
-				if ((this._nickname != value))
-				{
-					this.OnnicknameChanging(value);
-					this.SendPropertyChanging();
-					this._nickname = value;
-					this.SendPropertyChanged("nickname");
-					this.OnnicknameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_email", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
-		public string email
-		{
-			get
-			{
-				return this._email;
-			}
-			set
-			{
-				if ((this._email != value))
-				{
-					this.OnemailChanging(value);
-					this.SendPropertyChanging();
-					this._email = value;
-					this.SendPropertyChanged("email");
-					this.OnemailChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_balance", DbType="Decimal(18,0) NOT NULL")]
-		public decimal balance
-		{
-			get
-			{
-				return this._balance;
-			}
-			set
-			{
-				if ((this._balance != value))
-				{
-					this.OnbalanceChanging(value);
-					this.SendPropertyChanging();
-					this._balance = value;
-					this.SendPropertyChanged("balance");
-					this.OnbalanceChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dateOfBirth", DbType="Date NOT NULL")]
-		public System.DateTime dateOfBirth
-		{
-			get
-			{
-				return this._dateOfBirth;
-			}
-			set
-			{
-				if ((this._dateOfBirth != value))
-				{
-					this.OndateOfBirthChanging(value);
-					this.SendPropertyChanging();
-					this._dateOfBirth = value;
-					this.SendPropertyChanged("dateOfBirth");
-					this.OndateOfBirthChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Event", Storage="_Events", ThisKey="id", OtherKey="userId")]
-		public EntitySet<Event> Events
-		{
-			get
-			{
-				return this._Events;
-			}
-			set
-			{
-				this._Events.Assign(value);
 			}
 		}
 		
@@ -536,18 +362,6 @@ namespace Data.Database
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_Events(Event entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = this;
-		}
-		
-		private void detach_Events(Event entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = null;
 		}
 	}
 	
@@ -730,6 +544,144 @@ namespace Data.Database
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Users")]
+	public partial class User : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _name;
+		
+		private string _email;
+		
+		private EntitySet<Event> _Events;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnnameChanging(string value);
+    partial void OnnameChanged();
+    partial void OnemailChanging(string value);
+    partial void OnemailChanged();
+    #endregion
+		
+		public User()
+		{
+			this._Events = new EntitySet<Event>(new Action<Event>(this.attach_Events), new Action<Event>(this.detach_Events));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
+		public string name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				if ((this._name != value))
+				{
+					this.OnnameChanging(value);
+					this.SendPropertyChanging();
+					this._name = value;
+					this.SendPropertyChanged("name");
+					this.OnnameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_email", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
+		public string email
+		{
+			get
+			{
+				return this._email;
+			}
+			set
+			{
+				if ((this._email != value))
+				{
+					this.OnemailChanging(value);
+					this.SendPropertyChanging();
+					this._email = value;
+					this.SendPropertyChanged("email");
+					this.OnemailChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_Event", Storage="_Events", ThisKey="id", OtherKey="userId")]
+		public EntitySet<Event> Events
+		{
+			get
+			{
+				return this._Events;
+			}
+			set
+			{
+				this._Events.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Events(Event entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = this;
+		}
+		
+		private void detach_Events(Event entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = null;
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Products")]
 	public partial class Product : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -741,8 +693,6 @@ namespace Data.Database
 		private string _name;
 		
 		private double _price;
-		
-		private int _pegi;
 		
 		private EntitySet<State> _States;
 		
@@ -756,8 +706,6 @@ namespace Data.Database
     partial void OnnameChanged();
     partial void OnpriceChanging(double value);
     partial void OnpriceChanged();
-    partial void OnpegiChanging(int value);
-    partial void OnpegiChanged();
     #endregion
 		
 		public Product()
@@ -822,26 +770,6 @@ namespace Data.Database
 					this._price = value;
 					this.SendPropertyChanged("price");
 					this.OnpriceChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pegi", DbType="Int NOT NULL")]
-		public int pegi
-		{
-			get
-			{
-				return this._pegi;
-			}
-			set
-			{
-				if ((this._pegi != value))
-				{
-					this.OnpegiChanging(value);
-					this.SendPropertyChanging();
-					this._pegi = value;
-					this.SendPropertyChanged("pegi");
-					this.OnpegiChanged();
 				}
 			}
 		}

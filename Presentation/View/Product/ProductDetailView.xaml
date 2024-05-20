@@ -69,21 +69,6 @@
                         </ControlTemplate>
                     </Validation.ErrorTemplate>
                 </TextBox>
-
-                <Label Content="PEGI:"/>
-                <TextBox Height="20" Width="120" Margin="50,0,10,0"
-                         Text="{Binding Pegi , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
-                         TextWrapping="Wrap"
-                         BorderBrush="Gray">
-                    <Validation.ErrorTemplate>
-                        <ControlTemplate>
-                            <StackPanel>
-                                <AdornedElementPlaceholder x:Name="placeholder"/>
-                                <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red"/>
-                            </StackPanel>
-                        </ControlTemplate>
-                    </Validation.ErrorTemplate>
-                </TextBox>
             </StackPanel>
         </GroupBox>
         <Button Content="Update" Background="GreenYellow" HorizontalAlignment="Center" Margin="0,236,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"

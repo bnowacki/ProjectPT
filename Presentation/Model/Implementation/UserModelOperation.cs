@@ -17,12 +17,12 @@ internal class UserModelOperation : IUserModelOperation
 
     private IUserModel Map(IUserDTO user)
     {
-        return new UserModel(user.Id, user.Nickname, user.Email, user.Balance, user.DateOfBirth);
+        return new UserModel(user.Id, user.Name, user.Email);
     }
 
-    public async Task AddAsync(int id, string nickname, string email, double balance, DateTime dateOfBirth)
+    public async Task AddAsync(int id, string name, string email)
     {
-        await this._userCRUD.AddUserAsync(id, nickname, email, balance, dateOfBirth);
+        await this._userCRUD.AddUserAsync(id, name, email);
     }
 
     public async Task<IUserModel> GetAsync(int id)
@@ -30,9 +30,9 @@ internal class UserModelOperation : IUserModelOperation
         return this.Map(await this._userCRUD.GetUserAsync(id));
     }
 
-    public async Task UpdateAsync(int id, string nickname, string email, double balance, DateTime dateOfBirth)
+    public async Task UpdateAsync(int id, string name, string email)
     {
-        await this._userCRUD.UpdateUserAsync(id, nickname, email, balance, dateOfBirth);
+        await this._userCRUD.UpdateUserAsync(id, name, email);
     }
 
     public async Task DeleteAsync(int id)

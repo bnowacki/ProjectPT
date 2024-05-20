@@ -15,7 +15,7 @@ internal class RandomGenerator : IGenerator
 
         for (int i = 1; i <= 10; i++)
         {
-            viewModel.Users.Add(IUserDetailViewModel.CreateViewModel(i, RandomString(10), RandomEmail(), RandomNumber<double>(4), RandomDate(), operation, _informer));
+            viewModel.Users.Add(IUserDetailViewModel.CreateViewModel(i, RandomString(10), RandomEmail(), operation, _informer));
         }
     }
 
@@ -25,7 +25,7 @@ internal class RandomGenerator : IGenerator
 
         for (int i = 1; i <= 10; i++)
         {
-            viewModel.Products.Add(IProductDetailViewModel.CreateViewModel(i, RandomString(7), RandomNumber<double>(4), RandomPEGI(), operation, _informer));
+            viewModel.Products.Add(IProductDetailViewModel.CreateViewModel(i, RandomString(7), RandomNumber<double>(4), operation, _informer));
         }
     }
 
@@ -119,12 +119,4 @@ internal class RandomGenerator : IGenerator
             .AddSeconds(random.Next(60));
     }
 
-    private int RandomPEGI()
-    {
-        Random random = new Random();
-
-        List<int> pegiRange = new List<int>() { 3, 7, 12, 16, 18 };
-
-        return random.Next(pegiRange.Count);
-    }
 }
