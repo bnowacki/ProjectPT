@@ -8,7 +8,7 @@ internal class FakeEventCRUD : IEventCRUD
 
     public FakeEventCRUD()
     {
-
+//fake event  
     }
     
     public async Task AddEventAsync(int id, int stateId, int userId, string type, int quantity = 0)
