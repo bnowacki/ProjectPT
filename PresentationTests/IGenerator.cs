@@ -11,4 +11,8 @@ public interface IGenerator
     void GenerateStateModels(IStateMasterViewModel viewModel);
 
     void GenerateEventModels(IEventMasterViewModel viewModel);
+
+    void GenerateStateModels(IStateMasterViewModel viewModel);
+
+    void GenerateEventModels(IEventMasterViewModel viewModel);
 }

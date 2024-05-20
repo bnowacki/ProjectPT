@@ -1,4 +1,4 @@
-﻿using Presentation;
+using Presentation;
 using Presentation.Model.API;
 using Presentation.ViewModel;
 using PresentationTest;
@@ -69,10 +69,7 @@ internal class FixedGenerator : IGenerator
 viewModel.Events.Add(IEventDetailViewModel.CreateViewModel(1, 1, 1, DateTime.Now, "SupplyEvent", 10, operation, _informer));
         viewModel.Events.Add(IEventDetailViewModel.CreateViewModel(2, 2, 2, DateTime.Now, "SupplyEvent", 123, operation, _informer));
         viewModel.Events.Add(IEventDetailViewModel.CreateViewModel(3, 3, 3, DateTime.Now, "SupplyEvent", 3, operation, _informer));
-        viewModel.Events.Add(IEventDetailViewModel.CreateViewModel(4, 4, 4, DateTime.Now, "SupplyEvent", 5, operation, _informer));
-        viewModel.Events.Add(IEventDetailViewModel.CreateViewModel(5, 5, 5, DateTime.Now, "SupplyEvent", 15, operation, _informer));
-        viewModel.Events.Add(IEventDetailViewModel.CreateViewModel(6, 6, 6, DateTime.Now, "SupplyEvent", 23, operation, _informer));
-
+        
 
 
         {
@@ -80,9 +77,7 @@ viewModel.Events.Add(IEventDetailViewModel.CreateViewModel(1, 1, 1, DateTime.Now
 
 
        viewModel.Events.Add(IEventDetailViewModel.CreateViewModel(4, 4, 4, DateTime.Now, "SupplyEvent", 5, operation, _informer));
-        viewModel.Events.Add(IEventDetailViewModel.CreateViewModel(5, 5, 5, DateTime.Now, "SupplyEvent", 15, operation, _informer));
-        viewModel.Events.Add(IEventDetailViewModel.CreateViewModel(6, 6, 6, DateTime.Now, "SupplyEvent", 23, operation, _informer));
-
+        
 
 
         {
