@@ -36,17 +36,17 @@
             <Image Height="200" Width="200"
                    Source="/Images/logo.png"/>
             <TextBlock Height="40" Margin="0,-30,0,0"
-                       Text="GameStacc"
+                       Text="ShopBoard"
                        TextAlignment="Center" TextWrapping="Wrap"
                        FontSize="32" FontWeight="ExtraBold"/>
             <TextBlock Height="25"
-                       Text="Everything for gamers"
+                       Text=""
                        TextAlignment="Center" TextWrapping="Wrap" 
                        FontSize="16" FontWeight="DemiBold"/>
             <Separator Height="10" Width="50" Margin="0,110,0,0"
                        HorizontalAlignment="Center"/>
             <TextBlock Height="20"
-                       Text="TF and PK © 2023"
+                       Text=""
                        TextAlignment="Center" TextWrapping="Wrap"/>
         </StackPanel>
 
