@@ -13,23 +13,23 @@ internal class FixedGenerator : IGenerator
     {
         IUserModelOperation operation = IUserModelOperation.CreateModelOperation(new FakeUserCRUD());
 
-        viewModel.Users.Add(IUserDetailViewModel.CreateViewModel(1, "Mateusz", "m_kowalski@gmail.com", operation, _informer));
-        viewModel.Users.Add(IUserDetailViewModel.CreateViewModel(2, "Kamil", "k_miglanc@gmail.com", operation, _informer));
-        viewModel.Users.Add(IUserDetailViewModel.CreateViewModel(3, "Wladyslaw", "w_tomislawowski@gmail.com", operation, _informer));
-        viewModel.Users.Add(IUserDetailViewModel.CreateViewModel(4, "Joanna", "j_dzoanna@gmail.com", operation, _informer));
-        viewModel.Users.Add(IUserDetailViewModel.CreateViewModel(5, "Michal", "m_Zahenkos@gmail.com", operation, _informer));
+        viewModel.Users.Add(IUserDetailViewModel.CreateViewModel(1, "Alice", "alice@example.com", operation, _informer));
+        viewModel.Users.Add(IUserDetailViewModel.CreateViewModel(2, "Bob", "bob@example.com", operation, _informer));
+        viewModel.Users.Add(IUserDetailViewModel.CreateViewModel(3, "Charlie", "charlie@example.com", operation, _informer));
+        viewModel.Users.Add(IUserDetailViewModel.CreateViewModel(4, "Diana", "diana@example.com", operation, _informer));
+        viewModel.Users.Add(IUserDetailViewModel.CreateViewModel(5, "Eve", "eve@example.com", operation, _informer));
     }
 
     public void GenerateProductModels(IProductMasterViewModel viewModel)
     {
         IProductModelOperation operation = IProductModelOperation.CreateModelOperation(new FakeProductCRUD());
 
-        viewModel.Products.Add(IProductDetailViewModel.CreateViewModel(1, "Starcraft", 61.99, operation, _informer));
-        viewModel.Products.Add(IProductDetailViewModel.CreateViewModel(2, "Assassin's Creed Valhalla", 239.99, operation, _informer));
-        viewModel.Products.Add(IProductDetailViewModel.CreateViewModel(3, "Cyberpunk 2077", 299.99, operation, _informer));
-        viewModel.Products.Add(IProductDetailViewModel.CreateViewModel(4, "The Sims 3", 109.99, operation, _informer));
-        viewModel.Products.Add(IProductDetailViewModel.CreateViewModel(5, "Witcher 3", 129.99, operation, _informer));
-        viewModel.Products.Add(IProductDetailViewModel.CreateViewModel(6, "Diablo 3", 339.99, operation, _informer));
+        viewModel.Products.Add(IProductDetailViewModel.CreateViewModel(1, "Apples", 61.99, operation, _informer));
+        viewModel.Products.Add(IProductDetailViewModel.CreateViewModel(2, "Oranges", 32.99, operation, _informer));
+        viewModel.Products.Add(IProductDetailViewModel.CreateViewModel(3, "Sausage", 2.99, operation, _informer));
+        viewModel.Products.Add(IProductDetailViewModel.CreateViewModel(4, "Tomato", 9.99, operation, _informer));
+        viewModel.Products.Add(IProductDetailViewModel.CreateViewModel(5, "Ice cream", 1.99, operation, _informer));
+        viewModel.Products.Add(IProductDetailViewModel.CreateViewModel(6, "Pizza", 39.99, operation, _informer));
     }
 
     public void GenerateStateModels(IStateMasterViewModel viewModel)
